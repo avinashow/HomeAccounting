@@ -3,6 +3,7 @@ from endpoints import message_types
 from endpoints import messages
 from endpoints import remote
 
+
 class OverviewResponseItem(messages.Message):
     name = messages.StringField(1)
     outstanding_principal = messages.FloatField(2)
@@ -11,8 +12,10 @@ class OverviewResponseItem(messages.Message):
     date = messages.IntegerField(5)
     last_transaction_date = messages.IntegerField(6)
 
+
 class OverviewResponse(messages.Message):
     items = messages.MessageField(OverviewResponseItem, 1, repeated=True)
+
 
 @endpoints.api(name='homac', version='v1')
 class EchoApi(remote.Service):
