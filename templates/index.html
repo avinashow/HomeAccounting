@@ -2,8 +2,10 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     
 </head>
 <body>
@@ -23,21 +25,44 @@
             <component :is="currentView"></component>
         </div>
     </div>
-    <template id="manage-template">
+    <template id="summary-template">
         <div>
-            <h1>Manage Posts</h1>
+            <h1>{{title}}</h1>
             <div class="list-group">
-            <a v-for="item in summaryItems" href="#" class="list-group-item clearfix">
-                {{ item.name }}
-                <span class="pull-right">
-                <button class="btn btn-xs btn-info">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </button>
-                <button class="btn btn-xs btn-warning">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-                </span>
-            </a>
+                <a v-for="item in summaryItems" href="#" class="list-group-item clearfix">
+                    
+                    <div class="content-wrapper">
+                        <div class="label-group">
+                            <p class="title"><i class="fa fa-user"></i></p>
+                            <p class="caption">{{ item.name }}</p>
+                        </div>
+                        <div class="min-gap"></div>
+                        <div class="label-group">
+                            <p class="title">Date</p>
+                            <p class="caption">{{formatDate(item.date)}}</p>
+                        </div>
+                        <div class="min-gap"></div>
+                        <div class="label-group">
+                            <p class="title">Outstanding interest</p>
+                            <p class="caption"><i class="fa fa-rupee"></i> {{item.outstanding_interest}}</p>
+                        </div>
+                        <div class="min-gap"></div>
+                        <div class="label-group">
+                            <p class="title">Outstanding principal</p>
+                            <p class="caption"><i class="fa fa-rupee"></i> {{item.outstanding_principal}}</p>
+                        </div>
+                        <div class="min-gap"></div>
+                        <div class="label-group">
+                            <p class="title">Paid interest</p>
+                            <p class="caption"><i class="fa fa-rupee"></i> {{item.paid_interest}}</p>
+                        </div>
+                        <div class="min-gap"></div>
+                        <div class="label-group">
+                            <p class="title">Last transaction date</p>
+                            <p class="caption">{{formatDate(item.last_transaction_date)}}</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </template>

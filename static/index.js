@@ -1,31 +1,21 @@
 Vue.component('manage-transactions', {
-  template: '#manage-template',
+  template: '#summary-template',
   data: function() {
     return {
-      summaryItems: [{
-        "date": "1562259702", 
-        "last_transaction_date": "1562299702", 
-        "name": "Pavan", 
-        "outstanding_interest": 5000.0, 
-        "outstanding_principal": 100000.0, 
-        "paid_interest": 1000.0
-       }, 
-       {
-        "date": "1563059702", 
-        "last_transaction_date": "1563159702", 
-        "name": "Avinash", 
-        "outstanding_interest": 15000.0, 
-        "outstanding_principal": 200000.0, 
-        "paid_interest": 4000.0
-       }],
+      summaryItems: [],
+       title: 'Overview',
     }
   },
-  created:function() {
-		fetch('https://swapi.co/api/films/'+this.$route.params.id)
-		.then(res => res.json())
-		.then(res => {
-			console.log(res);
-			this.film = res;
+  methods: {
+    formatDate: function(dateStr) {
+      return moment(new Date(parseInt(dateStr) * 1000)).format('MM/DD/YYYY');
+    }
+  },
+  created: function() {
+		fetch('/_ah/api/homac/v1/overview')
+		.then(response => response.json())
+		.then(response => {
+			this.summaryItems = response.items;
 		});
 	},
 });
