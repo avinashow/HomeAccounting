@@ -28,42 +28,26 @@
     <template id="summary-template">
         <div>
             <h1>{{title}}</h1>
-            <div class="list-group">
-                <a v-for="item in summaryItems" href="#" class="list-group-item clearfix">
-                    
-                    <div class="content-wrapper">
-                        <div class="label-group">
-                            <p class="title"><i class="fa fa-user"></i></p>
-                            <p class="caption">{{ item.name }}</p>
-                        </div>
-                        <div class="min-gap"></div>
-                        <div class="label-group">
-                            <p class="title">Date</p>
-                            <p class="caption">{{formatDate(item.date)}}</p>
-                        </div>
-                        <div class="min-gap"></div>
-                        <div class="label-group">
-                            <p class="title">Outstanding interest</p>
-                            <p class="caption"><i class="fa fa-rupee"></i> {{item.outstanding_interest}}</p>
-                        </div>
-                        <div class="min-gap"></div>
-                        <div class="label-group">
-                            <p class="title">Outstanding principal</p>
-                            <p class="caption"><i class="fa fa-rupee"></i> {{item.outstanding_principal}}</p>
-                        </div>
-                        <div class="min-gap"></div>
-                        <div class="label-group">
-                            <p class="title">Paid interest</p>
-                            <p class="caption"><i class="fa fa-rupee"></i> {{item.paid_interest}}</p>
-                        </div>
-                        <div class="min-gap"></div>
-                        <div class="label-group">
-                            <p class="title">Last transaction date</p>
-                            <p class="caption">{{formatDate(item.last_transaction_date)}}</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td v-for="header in headers">
+                            {{formatLabel(header)}}
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in summaryItems">
+                        <td>{{item.name}}</td>
+                        <td><i class="fa fa-rupee"></i> {{item.paid_principal}}</td>
+                        <td><i class="fa fa-rupee"></i> {{item.paid_interest}}</td>
+                        <td><i class="fa fa-rupee"></i> {{item.outstanding_principal}}</td>
+                        <td><i class="fa fa-rupee"></i> {{item.outstanding_interest}}</td>
+                        <td>{{formatDate(item.last_transaction_date)}}</td>
+                        <td>{{formatDate(item.date)}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </template>
 
