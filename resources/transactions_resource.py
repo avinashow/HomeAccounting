@@ -1,13 +1,12 @@
 import endpoints
-from endpoints import remote
 from services.transactions_service import TransactionService
 from messages.transaction_messages import *
 
 from google.appengine.api import users
+from resources.base_resource import BaseResource
 
 
-@endpoints.api(name='homac', version='v1')
-class TransactionResource(remote.service):
+class TransactionResource(BaseResource):
 
     def __init__(self):
         self.transaction_service = TransactionService()

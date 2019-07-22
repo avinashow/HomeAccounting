@@ -4,6 +4,7 @@ from endpoints import messages
 from endpoints import remote
 
 from resources.transactions_resource import TransactionResource
+from resources.base_resource import BaseResource
 
 
 class OverviewResponseItem(messages.Message):
@@ -20,8 +21,7 @@ class OverviewResponse(messages.Message):
     items = messages.MessageField(OverviewResponseItem, 1, repeated=True)
 
 
-@endpoints.api(name='homac', version='v1')
-class EchoApi(remote.Service):
+class EchoApi(BaseResource):
 
     @endpoints.method(
         message_types.VoidMessage,
