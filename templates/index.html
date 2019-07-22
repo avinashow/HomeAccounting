@@ -12,9 +12,12 @@
         <div class="header clearfix">
             <nav>
                 <ul class="nav nav-pills pull-right">
-                <li role="presentation">
-                    <a href="#" @click="currentView='manage-transactions'">Overview</a>
-                </li>
+                    <li role="presentation">
+                        <a href="#" @click="currentView='manage-transactions'">Overview</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#" @click="currentView='view-transactions'">View transactions</a>
+                    </li>
                 </ul>
             </nav>
             <h3 class="text-muted">Admin Panel</h3>
@@ -24,45 +27,8 @@
             <component :is="currentView"></component>
         </div>
     </div>
-    <template id="summary-template">
-       
-        <div>
-            <h1>{{title}}</h1>
-            <span>
-                <strong>Total outstanding principal:</strong> {{ calculateTotalOutstandingPrincipal() }}
-            </span>
-            <span>
-                <strong>Total paid principal:</strong> {{ calculateTotalPaidPrincipal() }}
-            </span>
-            <span>
-                <strong>Total outstanding interest:</strong> {{ calculateTotalOutstandingInterest() }}
-            </span>
-            <span>
-                <strong>Total paid interest:</strong> {{ calculateTotalPaidInterest() }}
-            </span>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th v-for="header in headers">
-                            {{ formatLabel(header) }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in summaryItems">
-                        <td>{{ item.name }}</td>
-                        <td>{{ formatCurrency(item.paid_principal) }}</td>
-                        <td>{{ formatCurrency(item.paid_interest) }}</td>
-                        <td>{{ formatCurrency(item.outstanding_principal) }}</td>
-                        <td>{{ formatCurrency(item.outstanding_interest) }}</td>
-                        <td>{{ formatDate(item.last_transaction_date) }}</td>
-                        <td>{{ formatDate(item.date) }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </template>
-
+    <script src="/static/components/transactions.js"></script>
+    <script src="/static/components/overview.js"></script>
     <script src="/static/index.js"></script>
 </body>
 </html>
