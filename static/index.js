@@ -21,6 +21,12 @@ Vue.component('manage-transactions', {
     formatDate: function(dateStr) {
       return moment(new Date(parseInt(dateStr) * 1000)).format('MM/DD/YYYY');
     },
+    formatCurrency: function(number) {
+      if (!number) {
+        number = 0;
+      }
+      return number.toLocaleString('en-IN', { style:'currency',currency: 'INR' });
+    },
     formatLabel: function(value) {
       let inputArr = value.split('_');
       inputArr[0] = inputArr[0].charAt(0).toUpperCase() + inputArr[0].slice(1);

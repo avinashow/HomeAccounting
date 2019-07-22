@@ -32,27 +32,27 @@
                 <thead>
                     <tr>
                         <th v-for="header in headers">
-                            {{formatLabel(header)}}
+                            {{ formatLabel(header) }}
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in summaryItems">
-                        <td>{{item.name}}</td>
-                        <td><i class="fa fa-rupee"></i> {{item.paid_principal ? item.paid_principal : 0}}</td>
-                        <td><i class="fa fa-rupee"></i> {{item.paid_interest}}</td>
-                        <td><i class="fa fa-rupee"></i> {{item.outstanding_principal}}</td>
-                        <td><i class="fa fa-rupee"></i> {{item.outstanding_interest}}</td>
-                        <td>{{formatDate(item.last_transaction_date)}}</td>
-                        <td>{{formatDate(item.date)}}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ formatCurrency(item.paid_principal) }}</td>
+                        <td>{{ formatCurrency(item.paid_interest) }}</td>
+                        <td>{{ formatCurrency(item.outstanding_principal) }}</td>
+                        <td>{{ formatCurrency(item.outstanding_interest) }}</td>
+                        <td>{{ formatDate(item.last_transaction_date) }}</td>
+                        <td>{{ formatDate(item.date) }}</td>
                     </tr>
                 </tbody>
             </table>
             <p>
-                Total principal: {{calculateTotalPrincipal()}}
+                Total principal: {{ calculateTotalPrincipal() }}
             </p>
             <p>
-                Total interest: {{calculateTotalInterest()}}
+                Total interest: {{ calculateTotalInterest() }}
             </p>
         </div>
     </template>
