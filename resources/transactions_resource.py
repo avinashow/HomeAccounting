@@ -1,6 +1,7 @@
 import endpoints
 from services.transactions_service import TransactionService
 from messages.transaction_messages import *
+from endpoints import message_types
 
 from google.appengine.api import users
 from resources.base_resource import BaseResource
@@ -16,10 +17,16 @@ class TransactionResource(BaseResource):
         TransactionCreateRequest,
         TransactionResponse,
         path='transactions',
-        http_method='GET')
-    def add(self, transaction_type, borrower, payment_type,
-            amount, transaction_date, interest_rate):
+        http_method='POST',
+        name='transactions.add')
+    def add(self, request):
         user_id = self.get_current_user_id()
+        transaction_type = request.type
+        payment_type = request.payment_type
+        amount = request.amount
+        transaction_date = request.transaction_date
+        borrower = request.borrower_id
+        interest_rate = request.interest_rate
 
         # TODO - verify that all required fields have valid values
 
@@ -29,9 +36,20 @@ class TransactionResource(BaseResource):
                                                                interest_rate=interest_rate)
         return self.adapt_transaction_to_response(transaction)
 
-    def update(self, transaction_id, transaction_type=None, payment_type=None,
-               amount=None, transaction_date=None, borrower=None, interest_rate=None):
+    @endpoints.method(
+        TransactionUpdateRequest,
+        TransactionResponse,
+        path='transactions',
+        http_method='POST',
+        name='transactions.update')
+    def update(self, request, transaction_id):
         user_id = self.get_current_user_id()
+        transaction_type = request.type
+        payment_type = request.payment_type
+        amount = request.amount
+        transaction_date = request.transaction_date
+        borrower = request.borrower_id
+        interest_rate = request.interest_rate
 
         # TODO - verify that all required fields have valid values
 
@@ -40,11 +58,23 @@ class TransactionResource(BaseResource):
                                                     amount=amount, transaction_date=transaction_date,
                                                     borrower=borrower, interest_rate=interest_rate)
 
+    @endpoints.method(
+        message_types.VoidMessage,
+        message_types.VoidMessage,
+        path='transactions',
+        http_method='DELETE',
+        name='transactions.delete')
     def delete(self, transaction_id):
         user_id = self.get_current_user_id()
         self.transaction_service.delete_transaction(user_id=user_id, transaction_id=transaction_id)
 
-    def list(self, borrower=None):
+    @endpoints.method(
+        message_types.VoidMessage,
+        message_types.TransactionListResponse,
+        path='transactions',
+        http_method='GET',
+        name='transactions.list')
+    def list(self, borrower):
         user_id = self.get_current_user_id()
         transactions = self.transaction_service.list_transactions(user_id=user_id, borrower=borrower)
 
