@@ -39,7 +39,7 @@ Vue.component('manage-transactions', {
         total += parseInt(item.outstanding_principal) + parseInt((item.paid_principal) ? item.paid_principal : 0);
       });
       this.totalPrincipal = total;
-      return total;
+      return this.formatCurrency(total);
     },
     calculateTotalInterest() {
       let total = 0;
@@ -47,7 +47,7 @@ Vue.component('manage-transactions', {
         total += parseInt(item.outstanding_interest) + parseInt(item.paid_interest);
       });
       this.totalInterest = total;
-      return total;
+      return this.formatCurrency(total);
     }
   },
   created: function() {
