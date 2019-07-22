@@ -2,11 +2,61 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-    <script src="/static/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    
 </head>
 <body>
     <div id="app">
-        <router-view></router-view>
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                <li role="presentation">
+                    <a href="#" @click="currentView='manage-transactions'">Overview</a>
+                </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Admin Panel</h3>
+        </div>
+        
+        <div class="container">
+            <component :is="currentView"></component>
+        </div>
     </div>
+    <template id="summary-template">
+        <div>
+            <h1>{{title}}</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td v-for="header in headers">
+                            {{formatLabel(header)}}
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in summaryItems">
+                        <td>{{item.name}}</td>
+                        <td><i class="fa fa-rupee"></i> {{item.paid_principal ? item.paid_principal : 0}}</td>
+                        <td><i class="fa fa-rupee"></i> {{item.paid_interest}}</td>
+                        <td><i class="fa fa-rupee"></i> {{item.outstanding_principal}}</td>
+                        <td><i class="fa fa-rupee"></i> {{item.outstanding_interest}}</td>
+                        <td>{{formatDate(item.last_transaction_date)}}</td>
+                        <td>{{formatDate(item.date)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                Total principal: {{totalPrincipal}}
+            </p>
+            <p>
+                Total interest: {{totalInterest}}
+            </p>
+        </div>
+    </template>
+
+    <script src="/static/index.js"></script>
 </body>
 </html>
