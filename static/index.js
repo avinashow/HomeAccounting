@@ -34,7 +34,7 @@ Vue.component('manage-transactions', {
     calculateTotalOutstandingPrincipal() {
       let total = 0;
       this.summaryItems.forEach(function(item) {
-        total += parseInt(item.outstanding_principal) + parseInt((item.paid_principal) ? item.paid_principal : 0);
+        total += parseInt(item.outstanding_principal);
       });
       return this.formatCurrency(total);
     },
