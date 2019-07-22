@@ -1,24 +1,30 @@
 from models.transaction_model import Transaction
 from google.appengine.ext import ndb
 
-class TransactionStore:
+
+class TransactionsStore:
 
     def __init__(self):
         pass
 
-    def create_transaction(self, transaction):
+    @staticmethod
+    def create_transaction(transaction):
         transaction.put()
 
-    def delete_transaction(self, transaction):
+    @staticmethod
+    def delete_transaction(transaction):
         ndb.multi_delete([transaction])
 
-    def update_transaction(self, transaction):
+    @staticmethod
+    def update_transaction(transaction):
         transaction.put()
 
-    def get_transaction(self, transaction_id):
-        return Transaction.get_by_id(transaction_id)
+    @staticmethod
+    def get_transaction(transaction_id):
+        return ndb.Key(urlsafe=transaction_id).get()
 
-    def list_transactions(self, user_id, borrower=None):
+    @staticmethod
+    def list_transactions(user_id, borrower=None):
         query = Transaction.query().filter(Transaction.user_id == user_id)
         if borrower:
             query = query.filter(Transaction.borrower == borrower)

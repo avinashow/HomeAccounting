@@ -3,8 +3,12 @@ from endpoints import message_types
 from endpoints import messages
 from endpoints import remote
 
-from resources.transactions_resource import TransactionResource
+from resources.transaction_resource import TransactionResource
+from resources.contact_resource import ContactResource
 from resources.base_resource import BaseResource
+
+from google.appengine.api import users
+from flask import Flask, redirect, request, url_for
 
 
 class OverviewResponseItem(messages.Message):
@@ -20,6 +24,17 @@ class OverviewResponseItem(messages.Message):
 class OverviewResponse(messages.Message):
     items = messages.MessageField(OverviewResponseItem, 1, repeated=True)
 
+app = Flask(__name__)
+
+
+@app.route('/login')
+def login():
+    user = users.get_current_user()
+    if not user:
+        login_url = users.create_login_url('/')
+        return redirect(login_url)
+    return redirect('/')
+
 
 class EchoApi(BaseResource):
 
@@ -27,7 +42,8 @@ class EchoApi(BaseResource):
         message_types.VoidMessage,
         OverviewResponse,
         path='overview',
-        http_method='GET')
+        http_method='GET',
+        name='overview')
     def overview(self, request):
         mock_item_1 = OverviewResponseItem(name='Pavan', outstanding_principal=100000.0,
                                            outstanding_interest=5000.0, paid_interest=1000.0, paid_principal=0.0,
@@ -38,4 +54,4 @@ class EchoApi(BaseResource):
         items = [mock_item_1, mock_item_2]
         return OverviewResponse(items=items)
 
-api = endpoints.api_server([EchoApi, TransactionResource])
+api = endpoints.api_server([EchoApi, TransactionResource, ContactResource])
