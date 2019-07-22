@@ -17,5 +17,8 @@ handlers:
 - url: /
   static_files: templates/index.html
   upload: templates/index.html
+- url: /transactions
+  static_files: templates/transactions.html
+  upload: templates/transactions.html
 - url: /.*
   script: main.app
