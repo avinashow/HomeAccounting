@@ -25,6 +25,7 @@ Vue.component('manage-transactions', {
       if (!number) {
         number = 0;
       }
+      number = parseInt(number);
       return number.toLocaleString('en-IN', { style:'currency',currency: 'INR' });
     },
     formatLabel: function(value) {
