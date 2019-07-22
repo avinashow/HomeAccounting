@@ -24,7 +24,7 @@ Vue.component('manage-transactions', {
             </thead>
             <tbody>
                 <tr v-for="item in summaryItems">
-                    <td>{{ item.name }}</td>
+                    <td>{{ item.borrower_name }}</td>
                     <td>{{ formatCurrency(item.paid_principal) }}</td>
                     <td>{{ formatCurrency(item.paid_interest) }}</td>
                     <td>{{ formatCurrency(item.outstanding_principal) }}</td>

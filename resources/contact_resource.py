@@ -88,7 +88,7 @@ class ContactResource(BaseResource):
 
     @staticmethod
     def get_current_user_id():
-        return users.get_current_user().user_id()
+        return endpoints.get_current_user().user_id()
 
     @staticmethod
     def adapt_contact_to_response(contact):
