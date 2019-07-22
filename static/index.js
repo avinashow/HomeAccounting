@@ -3,8 +3,6 @@ Vue.component('manage-transactions', {
   data: function() {
     return {
       summaryItems: [],
-      totalInterest: 0,
-      totalPrincipal: 0,
       headers: [
         'name',
         'paid principal',
@@ -33,29 +31,42 @@ Vue.component('manage-transactions', {
       inputArr[0] = inputArr[0].charAt(0).toUpperCase() + inputArr[0].slice(1);
       return inputArr.join(' ');
     },
-    calculateTotalPrincipal() {
+    calculateTotalOutstandingPrincipal() {
       let total = 0;
       this.summaryItems.forEach(function(item) {
         total += parseInt(item.outstanding_principal) + parseInt((item.paid_principal) ? item.paid_principal : 0);
       });
-      this.totalPrincipal = total;
       return this.formatCurrency(total);
     },
-    calculateTotalInterest() {
+    calculateTotalOutstandingInterest() {
       let total = 0;
       this.summaryItems.forEach(function(item) {
         total += parseInt(item.outstanding_interest) + parseInt(item.paid_interest);
       });
-      this.totalInterest = total;
       return this.formatCurrency(total);
-    }
+    },
+    calculateTotalPaidInterest() {
+      let total = 0;
+      this.summaryItems.forEach(function(item) {
+        total +=  parseInt(item.paid_interest);
+      });
+      return this.formatCurrency(total);
+    },
+    calculateTotalPaidPrincipal() {
+      let total = 0;
+      this.summaryItems.forEach(function(item) {
+        total += parseInt((item.paid_principal) ? item.paid_principal : 0);
+      });
+      return this.formatCurrency(total);
+    },
   },
   created: function() {
 		fetch('/_ah/api/homac/v1/overview')
-		.then(response => response.json())
-		.then(response => {
-      this.summaryItems = response.items;
-		});
+      .then(response => response.json())
+      .then(response => {
+        this.summaryItems = response.items;
+      }).catch(function(error) {
+      });
 	},
 });
 

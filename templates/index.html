@@ -26,6 +26,18 @@
         </div>
     </div>
     <template id="summary-template">
+        <span>
+            <strong>Total outstanding principal:</strong> {{ calculateTotalOutstandingPrincipal() }}
+        </span>
+        <span>
+            <strong>Total paid principal:</strong> {{ calculateTotalPaidPrincipal() }}
+        </span>
+        <span>
+            <strong>Total outstanding interest:</strong> {{ calculateTotalOutstandingInterest() }}
+        </span>
+        <span>
+            <strong>Total paid interest:</strong> {{ calculateTotalPaidInterest() }}
+        </span>
         <div>
             <h1>{{title}}</h1>
             <table class="table">
@@ -48,12 +60,6 @@
                     </tr>
                 </tbody>
             </table>
-            <p>
-                Total principal: {{ calculateTotalPrincipal() }}
-            </p>
-            <p>
-                Total interest: {{ calculateTotalInterest() }}
-            </p>
         </div>
     </template>
 
