@@ -41,7 +41,7 @@ Vue.component('manage-transactions', {
     calculateTotalOutstandingInterest() {
       let total = 0;
       this.summaryItems.forEach(function(item) {
-        total += parseInt(item.paid_interest);
+        total += parseInt(item.outstanding_interest);
       });
       return this.formatCurrency(total);
     },
