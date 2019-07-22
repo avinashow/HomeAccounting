@@ -1,13 +1,13 @@
 from models.transaction_model import Transaction
-from datastores.transactions_store import TransactionStore
-from datastores.contacts_store import ContactStore
+from datastores.transactions_store import TransactionsStore
+from datastores.contacts_store import ContactsStore
 
 
-class TransactionService:
+class TransactionsService:
 
     def __init__(self):
-        self.store = TransactionStore()
-        self.contact_store = ContactStore()
+        self.store = TransactionsStore()
+        self.contact_store = ContactsStore()
 
     def add_transaction(self, user_id, transaction_type, payment_type,
                         amount, transaction_date, borrower_id, interest_rate):

@@ -1,11 +1,11 @@
 from models.contact_model import Contact
-from datastores.contacts_store import ContactStore
+from datastores.contacts_store import ContactsStore
 
 
-class ContactService:
+class ContactsService:
 
     def __init__(self):
-        self.store = ContactStore()
+        self.store = ContactsStore()
 
     def add_contact(self, user_id, name, phone_num, address):
         contact = Contact(user_id=user_id, name=name, phone_num=phone_num, address=address)

@@ -1,5 +1,5 @@
 import endpoints
-from services.transactions_service import TransactionService
+from services.transactions_service import TransactionsService
 from messages.transaction_messages import *
 from endpoints import message_types
 
@@ -10,7 +10,7 @@ from resources.base_resource import BaseResource
 class TransactionResource(BaseResource):
 
     def __init__(self):
-        self.transaction_service = TransactionService()
+        self.transaction_service = TransactionsService()
         self.borrower_name_by_id = dict()
 
     @endpoints.method(

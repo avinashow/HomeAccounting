@@ -2,7 +2,7 @@ from models.contact_model import Contact
 from google.appengine.ext import ndb
 
 
-class ContactStore:
+class ContactsStore:
 
     def __init__(self):
         pass

@@ -2,7 +2,7 @@ from models.transaction_model import Transaction
 from google.appengine.ext import ndb
 
 
-class TransactionStore:
+class TransactionsStore:
 
     def __init__(self):
         pass
