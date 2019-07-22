@@ -40,7 +40,7 @@ class TransactionResource(BaseResource):
         TransactionUpdateRequest,
         TransactionResponse,
         path='transactions',
-        http_method='POST',
+        http_method='PATCH',
         name='transactions.update')
     def update(self, request, transaction_id):
         user_id = self.get_current_user_id()
@@ -70,7 +70,7 @@ class TransactionResource(BaseResource):
 
     @endpoints.method(
         message_types.VoidMessage,
-        message_types.TransactionListResponse,
+        TransactionListResponse,
         path='transactions',
         http_method='GET',
         name='transactions.list')
