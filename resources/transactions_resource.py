@@ -61,10 +61,18 @@ class TransactionResource(BaseResource):
 
     def adapt_transaction_to_response(self, transaction):
         transaction_response = TransactionResponse()
+        transaction_response.transaction_id = transaction.key.urlsafe()
         transaction_response.amount = transaction.amount
         transaction_response.borrower_id = transaction.borrower.urlsafe()
-        transaction_response.borrower_name = self.borrower_name_by_id.get(transaction.borrower.urlsafe())
+        transaction_response.borrower_name = self.get_borrower_name(transaction)
         transaction_response.interest_rate = transaction.interest_rate
         transaction_response.payment_type = transaction.payment_type
         transaction_response.type = transaction.type
         transaction_response.transaction_date = transaction.transaction_date
+        return transaction_response
+
+    def get_borrower_name(self, transaction):
+        borrower_id = transaction.borrower.id()
+        if not borrower_id in self.borrower_name_by_id:
+            self.borrower_name_by_id[borrower_id] = transaction.borrower.get().name
+        return self.borrower_name_by_id[borrower_id]

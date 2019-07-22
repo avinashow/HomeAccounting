@@ -10,6 +10,7 @@ class TransactionResponse(messages.Message):
     borrower_id = messages.StringField(5)
     borrower_name = messages.StringField(6)
     interest_rate = messages.FloatField(7)
+    transaction_id = messages.StringField(8)
 
 
 class TransactionCreateRequest(messages.Message):

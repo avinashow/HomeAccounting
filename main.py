@@ -27,7 +27,8 @@ class EchoApi(BaseResource):
         message_types.VoidMessage,
         OverviewResponse,
         path='overview',
-        http_method='GET')
+        http_method='GET',
+        name='transactions.add')
     def overview(self, request):
         mock_item_1 = OverviewResponseItem(name='Pavan', outstanding_principal=100000.0,
                                            outstanding_interest=5000.0, paid_interest=1000.0, paid_principal=0.0,
