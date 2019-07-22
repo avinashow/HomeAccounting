@@ -27,14 +27,20 @@ Vue.component('manage-transactions', {
       return inputArr.join(' ');
     },
     calculateTotalPrincipal() {
+      let total = 0;
       this.summaryItems.forEach(function(item) {
-        this.totalPrincipal += parseint(item.outstanding_principal) + parseint(item.paid_principal);
+        total += parseInt(item.outstanding_principal) + parseInt((item.paid_principal) ? item.paid_principal : 0);
       });
+      this.totalPrincipal = total;
+      return total;
     },
     calculateTotalInterest() {
+      let total = 0;
       this.summaryItems.forEach(function(item) {
-        this.totalInterest += parseint(item.outstanding_interest) + parseint(item.paid_interest);
+        total += parseInt(item.outstanding_interest) + parseInt(item.paid_interest);
       });
+      this.totalInterest = total;
+      return total;
     }
   },
   created: function() {
@@ -42,8 +48,6 @@ Vue.component('manage-transactions', {
 		.then(response => response.json())
 		.then(response => {
       this.summaryItems = response.items;
-      this.calculateTotalPrincipal();
-      this.calculateTotalInterest();
 		});
 	},
 });
