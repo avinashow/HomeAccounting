@@ -8,7 +8,7 @@ class Transaction(ndb.Model):
     # payment type - principal, interest, is populated only when transaction type is `payment`
     payment_type = ndb.StringProperty(indexed=True)
     amount = ndb.FloatProperty()
-    transaction_date = ndb.DateProperty(indexed=True)
+    transaction_date = ndb.IntegerProperty(indexed=True)
     borrower = ndb.KeyProperty()
     # populate only when transaction type is `lent`
     interest_rate = ndb.FloatProperty()

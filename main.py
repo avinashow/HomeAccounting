@@ -3,6 +3,8 @@ from endpoints import message_types
 from endpoints import messages
 from endpoints import remote
 
+from resources.transactions_resource import TransactionResource
+
 
 class OverviewResponseItem(messages.Message):
     name = messages.StringField(1)
@@ -36,4 +38,4 @@ class EchoApi(remote.Service):
         items = [mock_item_1, mock_item_2]
         return OverviewResponse(items=items)
 
-api = endpoints.api_server([EchoApi])
+api = endpoints.api_server([EchoApi, TransactionResource])

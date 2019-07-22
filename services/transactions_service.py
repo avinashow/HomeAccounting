@@ -13,6 +13,7 @@ class TransactionService:
                                   amount=amount, transaction_date=transaction_date, borrower=borrower,
                                   interest_rate=interest_rate)
         self.store.create_transaction(transaction=transaction)
+        return transaction
 
     def update_transaction(self, user_id, transaction_id, transaction_type=None, payment_type=None,
                            amount=None, transaction_date=None, borrower=None, interest_rate=None):
