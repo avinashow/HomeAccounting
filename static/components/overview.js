@@ -25,12 +25,12 @@ Vue.component('manage-transactions', {
             <tbody>
                 <tr v-for="item in summaryItems">
                     <td>{{ item.name }}</td>
-                    <td>{{ formatCurrency(item.paid_principal) }}</td>
-                    <td>{{ formatCurrency(item.paid_interest) }}</td>
-                    <td>{{ formatCurrency(item.outstanding_principal) }}</td>
-                    <td>{{ formatCurrency(item.outstanding_interest) }}</td>
-                    <td>{{ formatDate(item.last_transaction_date) }}</td>
-                    <td>{{ formatDate(item.date) }}</td>
+                    <td>{{ item.paid_principal | formatCurrency }}</td>
+                    <td>{{ item.paid_interest | formatCurrency }}</td>
+                    <td>{{ item.outstanding_principal | formatCurrency }}</td>
+                    <td>{{ item.outstanding_interest | formatCurrency }}</td>
+                    <td>{{ item.last_transaction_date | formatDate }}</td>
+                    <td>{{ item.date | formatDate }}</td>
                 </tr>
             </tbody>
         </table>
