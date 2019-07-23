@@ -23,6 +23,7 @@ class TransactionsStore:
     def get_transaction(transaction_id):
         return ndb.Key(urlsafe=transaction_id).get()
 
+    '''Returns list of transactions sorted by date'''
     @staticmethod
     def list_transactions(user_id, borrower=None):
         query = Transaction.query().filter(Transaction.user_id == user_id)
