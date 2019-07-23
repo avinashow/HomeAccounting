@@ -3,16 +3,16 @@ Vue.component('manage-transactions', {
     <div>
         <h1>{{title}}</h1>
         <span>
-            <strong>Total outstanding principal:</strong> {{ calculateTotalOutstandingPrincipal() }}
+            <strong>Total outstanding principal:</strong> {{ calculateTotalOutstandingPrincipal() | formatCurrency }}
         </span>
         <span>
-            <strong>Total paid principal:</strong> {{ calculateTotalPaidPrincipal() }}
+            <strong>Total paid principal:</strong> {{ calculateTotalPaidPrincipal() | formatCurrency }}
         </span>
         <span>
-            <strong>Total outstanding interest:</strong> {{ calculateTotalOutstandingInterest() }}
+            <strong>Total outstanding interest:</strong> {{ calculateTotalOutstandingInterest() | formatCurrency }}
         </span>
         <span>
-            <strong>Total paid interest:</strong> {{ calculateTotalPaidInterest() }}
+            <strong>Total paid interest:</strong> {{ calculateTotalPaidInterest() | formatCurrency }}
         </span>
         <table class="table">
             <thead>
@@ -56,28 +56,28 @@ Vue.component('manage-transactions', {
         this.summaryItems.forEach(function(item) {
           total += parseInt(item.outstanding_principal);
         });
-        return this.formatCurrency(total);
+        return total;
       },
       calculateTotalOutstandingInterest() {
         let total = 0;
         this.summaryItems.forEach(function(item) {
           total += parseInt(item.outstanding_interest);
         });
-        return this.formatCurrency(total);
+        return total;
       },
       calculateTotalPaidInterest() {
         let total = 0;
         this.summaryItems.forEach(function(item) {
           total +=  parseInt(item.paid_interest);
         });
-        return this.formatCurrency(total);
+        return total;
       },
       calculateTotalPaidPrincipal() {
         let total = 0;
         this.summaryItems.forEach(function(item) {
           total += parseInt((item.paid_principal) ? item.paid_principal : 0);
         });
-        return this.formatCurrency(total);
+        return total;
       },
     },
     created: function() {
