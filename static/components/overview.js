@@ -18,7 +18,7 @@ Vue.component('manage-transactions', {
             <thead>
                 <tr>
                     <th v-for="header in headers">
-                        {{ formatLabel(header) }}
+                        {{ header | formatLabel }}
                     </th>
                 </tr>
             </thead>
