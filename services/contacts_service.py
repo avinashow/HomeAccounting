@@ -42,3 +42,12 @@ class ContactsService:
     def list_contacts(self, user_id):
         return self.store.list_contacts(user_id)
 
+    def get_contact(self, user_id, contact_id):
+        contact = self.store.get_contact(contact_id)
+
+        if not contact.user_id == user_id:
+            return None
+
+        return contact
+
+
