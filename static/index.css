@@ -12,3 +12,7 @@
 span:not(:last-of-type) {
     margin-right: 10px;
 }
+
+.table-image td, .table-image th {
+    vertical-align: middle;
+}

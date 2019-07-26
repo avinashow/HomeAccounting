@@ -81,11 +81,11 @@ Vue.component('manage-transactions', {
       },
     },
     created: function() {
-        fetch('/_ah/api/homac/v1/overview')
-          .then(response => response.json())
-          .then(response => {
-            this.summaryItems = response.items;
-          }).catch(function(error) {
-          });
-      },
+      fetch('/_ah/api/homac/v1/overview')
+        .then(response => response.json())
+        .then(response => {
+          this.summaryItems = response.items;
+        }).catch(function(error) {
+        });
+    },
   });
