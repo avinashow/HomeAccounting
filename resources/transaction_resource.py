@@ -119,6 +119,6 @@ class TransactionResource(BaseResource):
 
     def get_borrower_name(self, transaction):
         borrower_id = transaction.borrower.id()
-        if not borrower_id in self.borrower_name_by_id:
+        if borrower_id not in self.borrower_name_by_id:
             self.borrower_name_by_id[borrower_id] = transaction.borrower.get().name
         return self.borrower_name_by_id[borrower_id]
