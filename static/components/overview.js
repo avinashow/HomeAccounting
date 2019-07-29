@@ -1,4 +1,4 @@
-Vue.component('manage-transactions', {
+const summary = Vue.component('manage-transactions', {
     template:`
     <div>
         <h1>{{title}}</h1>
