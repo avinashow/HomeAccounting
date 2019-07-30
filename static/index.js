@@ -1,24 +1,24 @@
 var gapi = gapi || {};
 
+const router = new VueRouter({
+  mode: 'history',
+  routes: [
+    { path: '/', component: summary },
+    { path: '/transactions', component: transactions },
+    { path:'/editTransaction', name:'editTransaction', component: TransactionDetails }
+  ]
+})
+
+const app = new Vue({
+  el: '#app',
+  router,
+});
+
 /* eslint-disable no-unused-vars */
 
 // [START load_auth2_library]
 function loadAuthClient () {
   gapi.load('auth2', initGoogleAuth);
-
-  const router = new VueRouter({
-    mode: 'history',
-    routes: [
-      { path: '/', component: summary },
-      { path: '/transactions', component: transactions },
-      { path:'/editTransaction', name:'editTransaction', component: TransactionDetails }
-    ]
-  })
-
-  const app = new Vue({
-    el: '#app',
-    router,
-  });
 }
 // [END load_auth2_library]
 
@@ -28,7 +28,8 @@ function initGoogleAuth (clientId = '763777367630-oq4km25h2jmff80so6gi5rmk2nsrjb
     client_id: clientId,
     scope: 'https://www.googleapis.com/auth/userinfo.email'
   }).then(() => {
-    document.getElementById('sign-in-btn').disabled = false;
+    document.getElementById('sign-in-btn').hidden = true;
+    signIn();
   }).catch(err => {
     console.log(err);
   });
@@ -41,11 +42,10 @@ function signIn () {
     document.getElementById('sign-in-btn').hidden = true;
     // document.getElementById('sign-out-btn').hidden = false;
     // document.getElementById('send-request-btn').disabled = false;
-    var user = gapi.auth2.getAuthInstance().currentUser.get();
-    var idToken = user.getAuthResponse().id_token;
-    console.log('Access token = ' + encodeURIComponent(idToken));
+    events.$emit('on-load');
   }).catch(err => {
-    console.log(err);
+    document.getElementById('sign-in-btn').hidden = false;
+    //console.log(err);
   });
 }
 // [END user_signin]

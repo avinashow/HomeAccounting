@@ -136,12 +136,14 @@ const summary = Vue.component('manage-transactions', {
       },
     },
     created: function() {
-      fetch('/_ah/api/homac/v1/overview')
+      events.$on('on-load', function () {
+        fetch('/_ah/api/homac/v1/overview?access_token=' + getAccessToken())
         .then(response => response.json())
         .then(response => {
           this.summaryItems = response.items;
         }).catch(function(error) {
           this.summaryItems = overviewOffResponse.items;
         });
+      });
     },
   });
