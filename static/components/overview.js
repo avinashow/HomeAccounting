@@ -88,6 +88,7 @@ const summary = Vue.component('manage-transactions', {
                 </tr>
             </tbody>
         </table>
+        <button id='sign-in-btn' onclick="signIn();" disabled>Sign In</button>
     </div>`,
     data: function() {
       return {
@@ -140,6 +141,7 @@ const summary = Vue.component('manage-transactions', {
         .then(response => {
           this.summaryItems = response.items;
         }).catch(function(error) {
+          this.summaryItems = overviewOffResponse.items;
         });
     },
   });

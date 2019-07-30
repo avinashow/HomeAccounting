@@ -1,21 +1,17 @@
 
-const getOverviewOffResponse = function() {
-    return new Promise((resolve, reject) => {
-        resolve({
-            items: [
-                {
-                "borrower_name": "Pavan",
-                "date": "1562259702",
-                "last_transaction_date": "1562299702",
-                "outstanding_interest": 5000,
-                "outstanding_principal": 100000,
-                "paid_interest": 1000,
-                "paid_principal": 0
-                },
-           ],
-        });
-    });
-}
+const overviewOffResponse = {
+    items: [
+        {
+        "borrower_name": "Pavan",
+        "date": "1562259702",
+        "last_transaction_date": "1562299702",
+        "outstanding_interest": 5000,
+        "outstanding_principal": 100000,
+        "paid_interest": 1000,
+        "paid_principal": 0
+        },
+    ],
+};
 
 const getTransactionsOffResponse = function() {
     return new Promise((resolve) => {
