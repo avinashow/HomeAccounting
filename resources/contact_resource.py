@@ -87,10 +87,6 @@ class ContactResource(BaseResource):
         return ContactListResponse(items=contact_responses)
 
     @staticmethod
-    def get_current_user_id():
-        return endpoints.get_current_user().user_id()
-
-    @staticmethod
     def adapt_contact_to_response(contact):
         contact_response = ContactResponse()
         contact_response.contact_id = contact.key.urlsafe()

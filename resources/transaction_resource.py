@@ -101,10 +101,6 @@ class TransactionResource(BaseResource):
 
         return TransactionListResponse(items=transaction_responses)
 
-    @staticmethod
-    def get_current_user_id():
-        return users.get_current_user().user_id()
-
     def adapt_transaction_to_response(self, transaction):
         transaction_response = TransactionResponse()
         transaction_response.transaction_id = transaction.key.urlsafe()

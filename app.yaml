@@ -8,6 +8,8 @@ libraries:
 - name: ssl
   version: 2.7.11
 
+default_expiration: "1s"
+
 handlers:
 # The endpoints handler must be mapped to /_ah/api.
 - url: /_ah/api/.*

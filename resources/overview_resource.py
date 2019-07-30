@@ -7,6 +7,7 @@ from resources.base_resource import BaseResource
 from messages.overview_messages import *
 from services.overview_service import OverviewService
 from services.contacts_service import ContactsService
+import logging
 
 
 class OverviewResource(BaseResource):
@@ -40,7 +41,3 @@ class OverviewResource(BaseResource):
                                 paid_interest=overview_data.paid_interest, paid_principal=overview_data.paid_principal,
                                 date=overview_data.date, last_transaction_date=overview_data.last_transaction_date,
                                 borrower_id=overview_data.borrower_id)
-
-    @staticmethod
-    def get_current_user_id():
-        return endpoints.get_current_user().user_id()
