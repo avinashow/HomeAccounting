@@ -1,17 +1,15 @@
 import {userService} from '../_services/user.service.js';
 
 export const LoginPage = Vue.component('Login', {
-    render (createElement) {
-        return createElement('button', {
-          attrs: {
-            class: 'g-signin-button btn btn-primary'
-          },
-          domProps: {
-            innerHTML: 'sign-in'
-          },
-          ref: 'signinBtn'
-        }, this.$slots.default)
-    },
+    template:`
+        <div id="gSignInWrapper">
+            <span class="label">Sign in with:</span>
+            <div id="customBtn" class="customGPlusSignIn">
+                <span class="icon"></span>
+                <span class="buttonText">Google</span>
+            </div>
+        </div>
+    `,
     data: () => {
         return {
             params: {
@@ -33,10 +31,11 @@ export const LoginPage = Vue.component('Login', {
 
         window.gapi.load('auth2', () => {
 
-            const auth2 = window.gapi.auth2.init(this.params);
+            window.auth2 = window.gapi.auth2.init(this.params);
 
-            auth2.attachClickHandler(this.$refs.signinBtn, {}, googleUser => {
+            window.auth2.attachClickHandler(document.getElementById("customBtn"), {}, googleUser => {
                 userService.login(googleUser);
+                router.go('/');
               }, error => {
                 this.$emit('error', error)
                 this.$emit('failure', error) // an alias
@@ -44,7 +43,4 @@ export const LoginPage = Vue.component('Login', {
 
         });
     },
-    created: function() {
-        //window.gapi.load('auth2', this.initGoogleAuth(this.clientId));
-    }
 });

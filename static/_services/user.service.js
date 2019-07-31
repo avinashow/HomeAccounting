@@ -10,5 +10,5 @@ function login(user) {
 }
 
 function logout() {
-    alert('welcome to logout');
+    localStorage.removeItem('accessToken');
 }
