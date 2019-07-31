@@ -1,20 +1,19 @@
-var gapi = gapi || {};
+import { router } from './router.js';
 
-const router = new VueRouter({
-  mode: 'history',
-  routes: [
-    { path: '/', component: summary },
-    { path: '/transactions', component: transactions },
-    { path:'/editTransaction', name:'editTransaction', component: TransactionDetails }
-  ]
-})
+let gapi = gapi || {};
+
+/*let accessToken = () => {
+  var user = gapi.auth2.getAuthInstance().currentUser.get();
+  var idToken = user.getAuthResponse().id_token;
+  return encodeURIComponent(idToken);
+};*/
 
 const app = new Vue({
   el: '#app',
   router,
 });
 
-function loadAuthClient() {
+/*function loadAuthClient() {
   gapi.load('auth2', initGoogleAuth);
 }
 
@@ -38,4 +37,4 @@ function signIn() {
     document.getElementById('sign-in-btn').hidden = false;
     //console.log(err);
   });
-}
+}*/

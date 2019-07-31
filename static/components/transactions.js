@@ -1,4 +1,4 @@
-const transactions = Vue.component('view-transactions', {
+export const TransactionPage = Vue.component('view-transactions', {
     template: `
     <div>
         <table class="table table-bordered">

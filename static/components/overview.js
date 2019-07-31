@@ -1,4 +1,4 @@
-const summary = Vue.component('manage-transactions', {
+export const SummaryPage = Vue.component('Summary', {
     template:`
     <div>
         <h1>{{title}}</h1>
@@ -88,7 +88,6 @@ const summary = Vue.component('manage-transactions', {
                 </tr>
             </tbody>
         </table>
-        <button id='sign-in-btn' onclick="signIn();" disabled>Sign In</button>
     </div>`,
     data: function() {
       return {
@@ -137,14 +136,14 @@ const summary = Vue.component('manage-transactions', {
     },
     created: function() {
       var that = this;
-      events.$on('on-load', function () {
-        fetch('/_ah/api/homac/v1/overview?access_token=' + getAccessToken())
-        .then(response => response.json())
-        .then(response => {
-          that.summaryItems = response.items;
-        }).catch(function(error) {
-          that.summaryItems = overviewOffResponse.items;
-        });
-      });
+      //events.$on('on-load', function () {
+        fetch(`/_ah/api/homac/v1/overview?access_token=${localStorage.getItem('accessToken')}`)
+          .then(response => response.json())
+          .then(response => {
+            that.summaryItems = response.items;
+          }).catch(function(error) {
+            that.summaryItems = overviewOffResponse.items;
+          });
+      //});
     },
   });

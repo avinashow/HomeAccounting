@@ -1,5 +1,7 @@
 <html>
 <head>
+    <script src="https://google.github.io/traceur-compiler/bin/traceur.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.31/system.js"></script>
     <script src="https://unpkg.com/axios@0.16.1/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
@@ -7,6 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="/static/index.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"> 
+    <script src="/static/filters.js"></script>
+    <script src="/static/responses.js"></script>
 </head>
 <body>
     <div id="app">
@@ -19,6 +23,9 @@
                     <li role="presentation">
                         <router-link to="/transactions">View transactions</router-link>
                     </li>
+                    <li role="presentation">
+                        <router-link to="/logout">Logout</router-link>
+                    </li>
                 </ul>
             </nav> 
         </div>
@@ -29,13 +36,16 @@
             </div>
         </div>
     </div>
-    <script src="/static/base.js"></script>
+    <script>
+        System.import('/static/index.js');
+    </script>
+   <!--<script src="/static/base.js"></script>
     <script src="/static/responses.js"></script>
     <script src="/static/components/editTransactions.js"></script>
     <script src="/static/components/transactions.js"></script>
     <script src="/static/components/overview.js"></script>
     <script src="/static/filters.js"></script>
-    <script src="/static/index.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=loadAuthClient" async defer></script>
+    <script src="/static/index.js"></script>-->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 </html>

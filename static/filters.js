@@ -2,7 +2,7 @@ Vue.filter('formatDate',function(value) {
      return moment(new Date(parseInt(value) * 1000)).format('MM/DD/YYYY');
 });
 
-Vue.filter('formatCurrency',function(number) {
+ Vue.filter('formatCurrency',function(number) {
     if (!number) {
         number = 0;
       }
