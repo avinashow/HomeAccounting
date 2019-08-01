@@ -1,15 +1,7 @@
 import {userService} from '../_services/user.service.js';
 
 export const LoginPage = Vue.component('Login', {
-    template:`
-        <div id="gSignInWrapper">
-            <span class="label">Sign in with:</span>
-            <div id="customBtn" class="customGPlusSignIn">
-                <span class="icon"></span>
-                <span class="buttonText">Google</span>
-            </div>
-        </div>
-    `,
+    template:'<div></div>',
     data: () => {
         return {
             params: {
@@ -31,15 +23,18 @@ export const LoginPage = Vue.component('Login', {
 
         window.gapi.load('auth2', () => {
 
-            window.auth2 = window.gapi.auth2.init(this.params);
+            window.gapi.auth2.init(this.params)
+                .then(() => {
+                    window.gapi.auth2.getAuthInstance().signIn().then((googleUser) => {
+                        userService.login(googleUser);
+                      }).catch(err => {
+                        document.getElementById('sign-in-btn').hidden = false;
+                        //console.log(err);
+                      });
+                })
+                .catch(error => {
 
-            window.auth2.attachClickHandler(document.getElementById("customBtn"), {}, googleUser => {
-                userService.login(googleUser);
-                router.go('/');
-              }, error => {
-                this.$emit('error', error)
-                this.$emit('failure', error) // an alias
-              })
+                });
 
         });
     },

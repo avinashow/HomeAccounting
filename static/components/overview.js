@@ -1,94 +1,101 @@
 export const SummaryPage = Vue.component('Summary', {
     template:`
-    <div>
-        <h1>{{title}}</h1>
+    <section>
         <div class="row">
-          <div class="col-md-3 col-xl-4">
-            <div class="card mb-3 widget-content">
-              <div class="widget-content-wrapper">
-                <div class="widget-content-left">
-                  <div class="widget-heading">
-                    Total outstanding principal
-                  </div>
-                </div>
-                <div class="widget-content-right">
-                  <div class="widget-numbers">
-                    <span>{{ calculateTotalOutstandingPrincipal() | formatCurrency }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-xl-4">
-            <div class="card mb-3 widget-content">
-              <div class="widget-content-wrapper">
-                <div class="widget-content-left">
-                  <div class="widget-heading">
-                    Total paid principal
-                  </div>
-                </div>
-                <div class="widget-content-right">
-                  <div class="widget-numbers">
-                    <span>{{ calculateTotalPaidPrincipal() | formatCurrency }}</span>
+          <div class="col-md-3 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <div class="clearfix">
+                  <div class="float-right">
+                    <h5 class="card-title text-right">
+                      Total outstanding principal
+                    </h5>
+                    <p class="card-text text-right">
+                      {{ calculateTotalOutstandingPrincipal() | formatCurrency }}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-xl-4">
-            <div class="card mb-3 widget-content">
-              <div class="widget-content-wrapper">
-                <div class="widget-content-left">
-                  <div class="widget-heading">
-                    Total outstanding interest
-                  </div>
-                </div>
-                <div class="widget-content-right">
-                  <div class="widget-numbers">
-                    <span>{{ calculateTotalOutstandingInterest() | formatCurrency }}</span>
+          <div class="col-md-3 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <div class="clearfix">
+                  <div class="float-right">
+                    <h5 class="card-title text-right">
+                      Total paid principal
+                    </h5>
+                    <p class="card-text text-right">
+                      {{ calculateTotalPaidPrincipal() | formatCurrency }}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-xl-4">
-            <div class="card mb-3 widget-content">
-              <div class="widget-content-wrapper">
-                <div class="widget-content-left">
-                  <div class="widget-heading">
-                    Total paid interest
+          <div class="col-md-3 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <div class="clearfix">
+                  <div class="float-right">
+                    <h5 class="card-title text-right">
+                      Total outstanding interest
+                    </h5>
+                    <p class="card-text text-right">
+                      {{ calculateTotalOutstandingInterest() | formatCurrency }}
+                    </p>
                   </div>
                 </div>
-                <div class="widget-content-right">
-                  <div class="widget-numbers">
-                    <span>{{ calculateTotalPaidInterest() | formatCurrency }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <div class="clearfix">
+                  <div class="float-right">
+                    <h5 class="card-title text-right">
+                      Total paid interest
+                    </h5>
+                    <p class="card-text text-right">
+                      {{ calculateTotalPaidInterest() | formatCurrency }}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th v-for="header in headers">
-                        {{ header | formatLabel }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in summaryItems">
-                    <td>{{ item.borrower_name }}</td>
-                    <td>{{ item.paid_principal | formatCurrency }}</td>
-                    <td>{{ item.paid_interest | formatCurrency }}</td>
-                    <td>{{ item.outstanding_principal | formatCurrency }}</td>
-                    <td>{{ item.outstanding_interest | formatCurrency }}</td>
-                    <td>{{ item.last_transaction_date | formatDate }}</td>
-                    <td>{{ item.date | formatDate }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>`,
+        <div class="row">
+          <div class="col grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                      <tr>
+                          <th v-for="header in headers">
+                              {{ header | formatLabel }}
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr v-for="item in summaryItems">
+                          <td>{{ item.borrower_name }}</td>
+                          <td>{{ item.paid_principal | formatCurrency }}</td>
+                          <td>{{ item.paid_interest | formatCurrency }}</td>
+                          <td>{{ item.outstanding_principal | formatCurrency }}</td>
+                          <td>{{ item.outstanding_interest | formatCurrency }}</td>
+                          <td>{{ item.last_transaction_date | formatDate }}</td>
+                          <td>{{ item.date | formatDate }}</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>  
+    </section>`,
     data: function() {
       return {
         summaryItems: [],
