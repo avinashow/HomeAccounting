@@ -11,16 +11,8 @@ from flask import Flask, redirect, request, url_for
 app = Flask(__name__)
 
 
-@app.route('/login')
-def login():
-    user = users.get_current_user()
-    if not user:
-        login_url = users.create_login_url('/')
-        return redirect(login_url)
+@app.route('/<path:path>')
+def catch_all(path):
     return redirect('/')
-
-@app.route('*')
-def index():
-  return redirect('/')
 
 api = endpoints.api_server([OverviewResource, TransactionResource, ContactResource])
