@@ -16,7 +16,6 @@ export const LoginPage = Vue.component('Login', {
         }
     },
     mounted: function() {
-        console.log(this.$router);
         if (!window.gapi) {
             this.err('"https://apis.google.com/js/api:platform.js" needs to be included as a <script>.')
             return;

@@ -9,9 +9,8 @@ export const router = new VueRouter({
       { path:'/login', name:'Login', component: LoginPage },
       { path: '/', component: SummaryPage },
       { path: '/transactions', component: TransactionPage },
-      //{ path:'/editTransaction', name:'editTransaction', component: TransactionDetails }
 
-      { path:'*', redirect:'/login' },
+      { path:'/*', redirect:'/login' },
     ]
   })
 
