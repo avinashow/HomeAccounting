@@ -24,9 +24,9 @@ export const TransactionPage = Vue.component('view-transactions', {
                                 <td>{{transaction.transaction_date | formatDate}}</td>
                                 <td>{{transaction.amount | formatCurrency}}</td>
                                 <td>
-                                    <router-link :to="{ name:'editTransaction', params:{data: transaction} }" class="btn btn-outline-success btn-sm" >
+                                    <button class="btn btn-outline-success btn-sm" data-target="#myModal" >
                                         Edit
-                                    </router-link>
+                                    </button>
                                     <button type="button" class="btn btn-outline-danger btn-sm">
                                         Delete
                                     </button>
@@ -34,6 +34,29 @@ export const TransactionPage = Vue.component('view-transactions', {
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        Modal body..
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -53,12 +76,10 @@ export const TransactionPage = Vue.component('view-transactions', {
         },
     },
     created: function() {
-        //fetch('/_ah/api/homac/v1/transactions?')
-        //    .then(response =>  response.json())
-        getTransactionsOffResponse()
+        fetch(`/_ah/api/homac/v1/transactions?access_token=${localStorage.getItem('accessToken')}`)
+            .then(response =>  response.json())
             .then((response) => {
                 this.transactions = response.items;
-                console.log(this.transactions);
             })
             .catch(function(error) {
 
