@@ -16,6 +16,7 @@ export const LoginPage = Vue.component('Login', {
         }
     },
     mounted: function() {
+        console.log(this.$router);
         if (!window.gapi) {
             this.err('"https://apis.google.com/js/api:platform.js" needs to be included as a <script>.')
             return;
@@ -27,6 +28,7 @@ export const LoginPage = Vue.component('Login', {
                 .then(() => {
                     window.gapi.auth2.getAuthInstance().signIn().then((googleUser) => {
                         userService.login(googleUser);
+                        this.$router.push('/');
                       }).catch(err => {
                         document.getElementById('sign-in-btn').hidden = false;
                         //console.log(err);

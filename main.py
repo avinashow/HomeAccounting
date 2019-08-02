@@ -19,4 +19,8 @@ def login():
         return redirect(login_url)
     return redirect('/')
 
+@app.route('*')
+def index():
+  return redirect('/')
+
 api = endpoints.api_server([OverviewResource, TransactionResource, ContactResource])
