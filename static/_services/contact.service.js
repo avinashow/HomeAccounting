@@ -1,17 +1,20 @@
-export const transactionService = {
-    updateTransaction,
-    deleteTransaction,
-    addTransaction,
-};
+export const contactService = {
+    addContact,
+    getContacts
+}
 
-function addTransaction(formData) {
+function getContacts() {
+
+}
+
+function addContact(formData) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         formData,
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch('/_ah/api/homac/v1/contacts', requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response

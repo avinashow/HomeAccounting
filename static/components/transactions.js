@@ -1,3 +1,5 @@
+import {contactService} from '../_services/contact.service';
+
 export const TransactionPage = Vue.component('view-transactions', {
     template: `
     <div class="row">
@@ -49,7 +51,7 @@ export const TransactionPage = Vue.component('view-transactions', {
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form v-on:submit.prevent="addTransaction">
+                        <form v-on:submit.prevent="addTransaction(form)">
                             <div class="form-group">
                                 <label for="fullname">Name</label>
                                 <input v-model="form.contact.name" list="contacts-list" v-on:change="checkContactExist(form.contact.name)" id="fullname" class="form-control">
@@ -102,12 +104,12 @@ export const TransactionPage = Vue.component('view-transactions', {
                 this.contactExists = false;
             }
         },
-        addTransaction: function() {
-            console.log(this.form.contact);
+        addTransaction: function(requestObj) {
+            contactService.addContact(requestObj.contact);
+            console.log(requestObj.contact);
         },
         editTransaction: function(transactionObj) {
             serverBus.$emit('transactionSelected', transactionObj);
-            console.log(currentView);
         },
         deleteTransaction: function(transactionobj) {
         },
@@ -115,7 +117,7 @@ export const TransactionPage = Vue.component('view-transactions', {
     created: function() {
         let vm = this;
 
-        fetch(`/_ah/api/homac/v1/contacts?access_token=${localStorage.getItem('accessToken')}`)
+        contactService.getContacts()
             .then(response =>  response.json())
             .then((response) => {
                 vm.contacts = response.items;
