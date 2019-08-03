@@ -24,7 +24,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                                 <td>{{transaction.transaction_date | formatDate}}</td>
                                 <td>{{transaction.amount | formatCurrency}}</td>
                                 <td>
-                                    <button class="btn btn-outline-success btn-sm" data-target="#myModal" >
+                                    <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#myModal" >
                                         Edit
                                     </button>
                                     <button type="button" class="btn btn-outline-danger btn-sm">
@@ -37,26 +37,40 @@ export const TransactionPage = Vue.component('view-transactions', {
                 </div>
             </div>
         </div>
-        <div class="modal" id="myModal">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Modal Heading</h4>
+                        <h4 class="modal-title">Add/Edit Transaction</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        Modal body..
+                        <form>
+                            <div class="form-group">
+                                <label for="fullname">Name</label>
+                                <input v-model="form.contactname" id="fullname" class="form-control">
+                                <datalist id="contacts">
+                                    
+                                </datalist>
+                            </div>
+                            <div class="form-group" v-if="contactExists">
+                                <label for="phone">Phone:</label>
+                                <input v-model="form.contact.phone_num" id="phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Amount:</label>
+                                <input v-model="form.amount" id="amount" class="form-control">
+                            </div>
+                            <div class="form-group">
+                            </div>
+                            <button class="btn btn-primary">Submit</button>
+                            <button class="btn btn-light">Reset</button>
+                        </form>
                     </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -64,7 +78,15 @@ export const TransactionPage = Vue.component('view-transactions', {
     `,
     data: function() {
         return {
-            transactions: []
+            transactions: [],
+            contactExists: false,
+            form: {
+                contact: {
+                    name:'',
+                    phone_num:''
+                },
+                amount:''
+            }
         }
     },
     methods: {
@@ -76,13 +98,14 @@ export const TransactionPage = Vue.component('view-transactions', {
         },
     },
     created: function() {
+        let vm = this;
         fetch(`/_ah/api/homac/v1/transactions?access_token=${localStorage.getItem('accessToken')}`)
             .then(response =>  response.json())
             .then((response) => {
-                this.transactions = response.items;
+                vm.transactions = response.items;
             })
             .catch(function(error) {
-
+                vm.transactions = transactionsOffResponse.items;
             });
     }
 });
