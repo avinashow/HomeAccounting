@@ -1,4 +1,4 @@
-import {contactService} from '../_services/contact.service';
+import {contactService} from '../_services/contact.service.js';
 
 export const TransactionPage = Vue.component('view-transactions', {
     template: `
