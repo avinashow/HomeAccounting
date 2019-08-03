@@ -16,14 +16,14 @@ const overviewOffResponse = {
 const transactionsOffResponse = {
     items: [
         {
-            "type": 'lend',
-            "payment_type": 'principal',
-            "amount": '23458',
-            "transaction_date": "1562259702",
-            "borrower_id": 1,
-            "borrower_name": 'pavan',
-            "interest_rate":'8',
-            "transaction_id": 1
+            type: 'lend',
+            payment_type: 'principal',
+            amount: '23458',
+            transaction_date: "1562259702",
+            borrower_id: 1,
+            borrower_name: 'pavan',
+            interest_rate:'8',
+            transaction_id: 1
         },
         {
             type: 'payback',

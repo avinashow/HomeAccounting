@@ -49,12 +49,12 @@ export const TransactionPage = Vue.component('view-transactions', {
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent="addTransaction">
                             <div class="form-group">
                                 <label for="fullname">Name</label>
-                                <input v-model="form.contactname" id="fullname" class="form-control">
-                                <datalist id="contacts">
-                                    
+                                <input v-model="form.contact.name" list="contacts-list" v-on:change="checkContactExist(form.contact.name)" id="fullname" class="form-control">
+                                <datalist id="contacts-list">
+                                    <option v-for="contact in contacts" value="contact.name">{{contact.name}}</option>
                                 </datalist>
                             </div>
                             <div class="form-group" v-if="contactExists">
@@ -79,6 +79,8 @@ export const TransactionPage = Vue.component('view-transactions', {
     data: function() {
         return {
             transactions: [],
+            contacts: [],
+            selectedContact: {},
             contactExists: false,
             form: {
                 contact: {
@@ -90,6 +92,19 @@ export const TransactionPage = Vue.component('view-transactions', {
         }
     },
     methods: {
+        checkContactExist: function(name) {
+            this.selectedContact = this.contacts.filter((contact) => {
+                return contact.name === name;
+            });
+            if (this.selectedContact) {
+                this.contactExists = true;
+            } else {
+                this.contactExists = false;
+            }
+        },
+        addTransaction: function() {
+            console.log(this.form.contact);
+        },
         editTransaction: function(transactionObj) {
             serverBus.$emit('transactionSelected', transactionObj);
             console.log(currentView);
@@ -99,6 +114,17 @@ export const TransactionPage = Vue.component('view-transactions', {
     },
     created: function() {
         let vm = this;
+
+        fetch(`/_ah/api/homac/v1/contacts?access_token=${localStorage.getItem('accessToken')}`)
+            .then(response =>  response.json())
+            .then((response) => {
+                vm.contacts = response.items;
+            })
+            .catch(function(error) {
+                //vm.$router.push('/login');
+            });
+
+
         fetch(`/_ah/api/homac/v1/transactions?access_token=${localStorage.getItem('accessToken')}`)
             .then(response =>  response.json())
             .then((response) => {
@@ -106,6 +132,7 @@ export const TransactionPage = Vue.component('view-transactions', {
             })
             .catch(function(error) {
                 vm.transactions = transactionsOffResponse.items;
+                //vm.$router.push('/login');
             });
     }
 });
