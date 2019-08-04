@@ -69,7 +69,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                             </div>
                             <div class="form-group">
                             </div>
-                            <button class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                             <button class="btn btn-light">Reset</button>
                         </form>
                     </div>
@@ -116,15 +116,6 @@ export const TransactionPage = Vue.component('view-transactions', {
     },
     created: function() {
         let vm = this;
-
-        contactService.getContacts()
-            .then(response =>  response.json())
-            .then((response) => {
-                vm.contacts = response.items;
-            })
-            .catch(function(error) {
-                //vm.$router.push('/login');
-            });
 
 
         fetch(`/_ah/api/homac/v1/transactions?access_token=${localStorage.getItem('accessToken')}`)
