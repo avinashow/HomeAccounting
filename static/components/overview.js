@@ -1,3 +1,5 @@
+import {overviewService} from '../_services/overview.service.js';
+
 export const SummaryPage = Vue.component('Summary', {
     template:`
     <section>
@@ -143,13 +145,14 @@ export const SummaryPage = Vue.component('Summary', {
     },
     created: function() {
       var vm = this;
-      fetch(`/_ah/api/homac/v1/overview?access_token=${localStorage.getItem('accessToken')}`)
-        .then(response => response.json())
-        .then(response => {
-          vm.summaryItems = response.items;
-        })
-        .catch(function(error) {
-          vm.summaryItems = overviewOffResponse.items;
-        });
+
+      overviewService.getOverview()
+          .then(response => response.json())
+          .then(response => {
+            this.summaryItems = response.items;
+          })
+          .catch(error => {
+
+          });
     },
   });
