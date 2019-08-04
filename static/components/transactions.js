@@ -7,13 +7,12 @@ export const TransactionPage = Vue.component('view-transactions', {
         <div class="col grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <button type="button" @click="mode='NEW'" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
+                    <button type="button" @click="mode='NEW';resetForm();" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
                         Add transaction
                     </button>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Payment type</th>
@@ -23,7 +22,6 @@ export const TransactionPage = Vue.component('view-transactions', {
                         </thead>
                         <tbody>
                             <tr v-for="transaction in transactions">
-                                <th scope="row">{{transaction.transaction_id}}</th>
                                 <td>{{transaction.borrower_name | formatLabel}}</td>
                                 <td>{{transaction.type}}</td>
                                 <td>{{transaction.payment_type}}</td>
@@ -61,14 +59,21 @@ export const TransactionPage = Vue.component('view-transactions', {
                         <form v-on:submit.prevent="toggleTransaction(form)">
                             <div class="form-group">
                                 <label for="fullname">Name</label>
-                                <input v-model="form.contact.name" list="contacts-list" v-on:change="checkContactExist(form.contact.name)" id="fullname" class="form-control">
+                                <input v-model="form.borrower_name" list="contacts-list" v-on:change="checkContactExist(form.borrower_name)" id="fullname" class="form-control">
                                 <datalist id="contacts-list">
                                     <option v-for="contact in contacts" value="contact.name">{{contact.name}}</option>
                                 </datalist>
                             </div>
                             <div class="form-group" v-if="contactExists">
                                 <label for="phone">Phone:</label>
-                                <input v-model="form.contact.phone_num" id="phone" class="form-control">
+                                <input v-model="form.phone_num" id="phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="transaction-date">Date:</label>
+                                <input type="date" class="form-control"
+                                    v-on:input="getEpoch(form.transaction_date_copy);"
+                                    v-model="form.transaction_date_copy"
+                                    id="transaction-date">
                             </div>
                             <div class="form-group">
                                 <label for="amount">Amount:</label>
@@ -111,19 +116,23 @@ export const TransactionPage = Vue.component('view-transactions', {
             contactExists: false,
             mode: 'EDIT',
             form: {
-                contact: {
-                    name: '',
-                    phone_num: ''
-                },
+                phone_num: '',
+                address:'',
                 amount: '',
                 type: '',
                 payment_type:'principal',
                 interest_rate: 0,
-                borrower_id:'0'
+                borrower_id:'0',
+                borrower_name: '',
+                transaction_date: '',
+                transaction_date_copy: '',
             }
         }
     },
     methods: {
+        getEpoch: function(date) {
+            this.form.transaction_date = ((new Date(date)).getTime())/1000;
+        },
         selectTransaction: function(transaction) {
             for (const [key,value] of Object.entries(transaction)) {
                 if (this.form.hasOwnProperty(key)) {
@@ -149,7 +158,11 @@ export const TransactionPage = Vue.component('view-transactions', {
             }
         },
         addTransaction: function(requestObj) {
-            contactService.addContact(requestObj.contact)
+            contactService.addContact({
+                    name:this.form.borrower_name,
+                    phone_num: this.form.phone_num,
+                    address: this.form.address
+                })
                 .then(response => response.json())
                 .then(response => {
                     let newRequestObj = {};
@@ -162,6 +175,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                     transactionService.addTransaction(newRequestObj)
                         .then(response => response.json())
                         .then(response => {
+                            document.getElementById('myModal').modal('hide');
                             this.resetForm();
                         })
                         .catch(error => {
@@ -184,14 +198,17 @@ export const TransactionPage = Vue.component('view-transactions', {
         },
         resetForm: function() {
             this.form =  {
-                contact: {
-                    name: '',
-                    phone_num: ''
-                },
-                amount:''
+                phone_num: '',
+                address:'',
+                amount: '',
+                type: '',
+                payment_type:'principal',
+                interest_rate: 0,
+                borrower_id:'0',
+                borrower_name:'',
+                transaction_date: '',
+                transaction_date_copy: '',
             };
-        },
-        deleteTransaction: function(transactionobj) {
         },
     },
     created: function() {
