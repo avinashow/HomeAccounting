@@ -6,7 +6,9 @@ export const TransactionPage = Vue.component('view-transactions', {
         <div class="col grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add transaction</button>
+                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
+                        Add transaction
+                    </button>
                     <table class="table">
                         <thead>
                             <tr>
@@ -71,7 +73,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                             <div class="form-group">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <button class="btn btn-light">Reset</button>
+                            <button class="btn btn-light" v-on:click="resetForm">Reset</button>
                         </form>
                     </div>
                 </div>
@@ -87,8 +89,8 @@ export const TransactionPage = Vue.component('view-transactions', {
             contactExists: false,
             form: {
                 contact: {
-                    name:'',
-                    phone_num:''
+                    name: '',
+                    phone_num: ''
                 },
                 amount:''
             }
@@ -107,10 +109,19 @@ export const TransactionPage = Vue.component('view-transactions', {
         },
         addTransaction: function(requestObj) {
             contactService.addContact(requestObj.contact);
-            console.log(requestObj.contact);
+            this.resetForm();
         },
         editTransaction: function(transactionObj) {
             serverBus.$emit('transactionSelected', transactionObj);
+        },
+        resetForm: function() {
+            this.form =  {
+                contact: {
+                    name: '',
+                    phone_num: ''
+                },
+                amount:''
+            };
         },
         deleteTransaction: function(transactionobj) {
         },
@@ -118,15 +129,13 @@ export const TransactionPage = Vue.component('view-transactions', {
     created: function() {
         let vm = this;
 
-
-        fetch(`/_ah/api/homac/v1/transactions?access_token=${localStorage.getItem('accessToken')}`)
-            .then(response =>  response.json())
-            .then((response) => {
+        transactionService.getTransactions()
+            .then(response => response.json())
+            .then(response => {
                 vm.transactions = response.items;
             })
-            .catch(function(error) {
+            .catch(error => {
                 vm.transactions = transactionsOffResponse.items;
-                //vm.$router.push('/login');
             });
     }
 });

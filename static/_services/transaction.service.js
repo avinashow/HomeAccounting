@@ -2,7 +2,12 @@ export const transactionService = {
     updateTransaction,
     deleteTransaction,
     addTransaction,
+    listTransactions
 };
+
+function listTransactions() {
+    return fetch(`/_ah/api/homac/v1/transactions?access_token=${localStorage.getItem('accessToken')}`);
+}
 
 function addTransaction(formData) {
     const requestOptions = {
