@@ -89,7 +89,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                             </div>
                             <div class="form-group">
                                 <label for="interest">Interest:</label>
-                                <input v-model="form.interest" id="interest" class="form-control">
+                                <input v-model="form.interest_rate" type="number" step="0.01" id="interest" class="form-control">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <button class="btn btn-light" v-on:click="resetForm">Reset</button>
@@ -111,10 +111,10 @@ export const TransactionPage = Vue.component('view-transactions', {
                     name: '',
                     phone_num: ''
                 },
-                amount:'',
-                type:'',
+                amount: '',
+                type: '',
                 payment_type:'principal',
-                interest:'',
+                interest_rate: 0,
             }
         }
     },
@@ -139,8 +139,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                             newRequestObj[key] = value;
                         }
                     }
-                    console.log(newRequestObj);
-                    newRequestObj['borrower_id'] = response.borrower_id;
+                    newRequestObj['borrower_id'] = response.contact_id;
                     transactionService.addTransaction(newRequestObj)
                         .then(response => response.json())
                         .then(response => {
