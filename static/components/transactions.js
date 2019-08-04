@@ -6,6 +6,7 @@ export const TransactionPage = Vue.component('view-transactions', {
         <div class="col grid-margin">
             <div class="card">
                 <div class="card-body">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add transaction</button>
                     <table class="table">
                         <thead>
                             <tr>
