@@ -81,11 +81,15 @@ export const TransactionPage = Vue.component('view-transactions', {
                             </div>
                             <div class="form-group" v-if="form.type === 'payback'">
                                 <label for="paymenttype">Payment type:</label>
-                                <select id="paymenttype" v-model="form.paymenttype" class="form-control">
+                                <select id="paymenttype" v-model="form.payment_type" class="form-control">
                                     <option>Choose</option>
                                     <option value="principal">Principal</option>
                                     <option value="interest">Interest</option>
                                  </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="interest">Interest:</label>
+                                <input v-model="form.interest" id="interest" class="form-control">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <button class="btn btn-light" v-on:click="resetForm">Reset</button>
@@ -110,6 +114,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                 amount:'',
                 type:'',
                 payment_type:'principal',
+                interest:'',
             }
         }
     },
@@ -125,8 +130,29 @@ export const TransactionPage = Vue.component('view-transactions', {
             }
         },
         addTransaction: function(requestObj) {
-            contactService.addContact(requestObj.contact);
-            this.resetForm();
+            contactService.addContact(requestObj.contact)
+                .then(response => response.json())
+                .then(response => {
+                    let newRequestObj = {};
+                    for (const [key, value] of Object.entries(requestObj)) {
+                        if (key !== 'contact') {
+                            newRequestObj[key] = value;
+                        }
+                    }
+                    console.log(newRequestObj);
+                    newRequestObj['borrower_id'] = response.borrower_id;
+                    transactionService.addTransaction(newRequestObj)
+                        .then(response => response.json())
+                        .then(response => {
+                            this.resetForm();
+                        })
+                        .catch(error => {
+
+                        });
+                })
+                .catch(error => {
+
+                });
         },
         editTransaction: function(transactionObj) {
             serverBus.$emit('transactionSelected', transactionObj);
