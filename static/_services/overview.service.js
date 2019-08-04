@@ -1,4 +1,4 @@
-const overviewService = {
+export const overviewService = {
     getOverview
 };
 
