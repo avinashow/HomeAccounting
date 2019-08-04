@@ -58,3 +58,12 @@ span:not(:last-of-type) {
     padding: 1.5rem 1.7rem;
     flex-grow: 1;
 }
+
+.modal-full {
+    min-width: 100%;
+    margin: 0;
+}
+
+.modal-full .modal-content {
+    min-height: 100vh;
+}
