@@ -7,7 +7,7 @@ export const TransactionPage = Vue.component('view-transactions', {
         <div class="col grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
+                    <button type="button" @click="mode='NEW'" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
                         Add transaction
                     </button>
                     <table class="table">
@@ -30,7 +30,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                                 <td>{{transaction.transaction_date | formatDate}}</td>
                                 <td>{{transaction.amount | formatCurrency}}</td>
                                 <td>
-                                    <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#myModal" >
+                                    <button v-on:click="mode='EDIT';selectTransaction(transaction);" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#myModal" >
                                         Edit
                                     </button>
                                     <button type="button" class="btn btn-outline-danger btn-sm">
@@ -49,13 +49,16 @@ export const TransactionPage = Vue.component('view-transactions', {
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Add/Edit Transaction</h4>
+                        <h4 class="modal-title">
+                            <span v-if="mode === 'EDIT'">Edit transaction</span>
+                            <span v-else>Add transaction</span>
+                        </h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form v-on:submit.prevent="addTransaction(form)">
+                        <form v-on:submit.prevent="toggleTransaction(form)">
                             <div class="form-group">
                                 <label for="fullname">Name</label>
                                 <input v-model="form.contact.name" list="contacts-list" v-on:change="checkContactExist(form.contact.name)" id="fullname" class="form-control">
@@ -106,6 +109,7 @@ export const TransactionPage = Vue.component('view-transactions', {
             contacts: [],
             selectedContact: {},
             contactExists: false,
+            mode: 'EDIT',
             form: {
                 contact: {
                     name: '',
@@ -115,10 +119,18 @@ export const TransactionPage = Vue.component('view-transactions', {
                 type: '',
                 payment_type:'principal',
                 interest_rate: 0,
+                borrower_id:'0'
             }
         }
     },
     methods: {
+        selectTransaction: function(transaction) {
+            for (const [key,value] of Object.entries(transaction)) {
+                if (this.form.hasOwnProperty(key)) {
+                    this.form[key] = value;
+                }
+            }
+        },
         checkContactExist: function(name) {
             this.selectedContact = this.contacts.filter((contact) => {
                 return contact.name === name;
@@ -127,6 +139,13 @@ export const TransactionPage = Vue.component('view-transactions', {
                 this.contactExists = true;
             } else {
                 this.contactExists = false;
+            }
+        },
+        toggleTransaction: function(requestObj) {
+            if (this.mode === 'EDIT') {
+                this.updateTransaction(requestObj);
+            } else {
+                this.addTransaction(requestObj);
             }
         },
         addTransaction: function(requestObj) {
@@ -153,8 +172,15 @@ export const TransactionPage = Vue.component('view-transactions', {
 
                 });
         },
-        editTransaction: function(transactionObj) {
-            serverBus.$emit('transactionSelected', transactionObj);
+        updateTransaction: function(transactionObj) {
+            transactionService.updateTransaction(transactionObj)
+                .then(response => response.json())
+                .then(response => {
+                    this.resetForm();
+                })
+                .catch(error => {
+
+                });
         },
         resetForm: function() {
             this.form =  {
