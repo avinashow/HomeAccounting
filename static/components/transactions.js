@@ -126,6 +126,10 @@ export const TransactionPage = Vue.component('view-transactions', {
                 {
                     label: 'Transaction date',
                     name: 'transaction_date'
+                },
+                {
+                    label: 'Amount',
+                    name: 'amount',
                 }
             ],
             reverse: false,
@@ -186,6 +190,7 @@ export const TransactionPage = Vue.component('view-transactions', {
             }
         },
         addTransaction: function(requestObj) {
+            let vm = this;
             contactService.addContact({
                     name:this.form.borrower_name,
                     phone_num: this.form.phone_num,
@@ -204,7 +209,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                         .then(response => response.json())
                         .then(response => {
                             document.getElementById('myModal').modal('hide');
-                            this.resetForm();
+                            vm.$router.push('/transactions');
                         })
                         .catch(error => {
 
