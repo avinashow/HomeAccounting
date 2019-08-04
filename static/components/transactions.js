@@ -13,11 +13,11 @@ export const TransactionPage = Vue.component('view-transactions', {
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Payment type</th>
-                                <th scope="col">Transaction date</th>
-                                <th scope="col">Amount</th>
+                                <th v-for="column in columns">
+                                    <a href="#" v-on:click="sortBy(column.name)">
+                                        {{column.label}}
+                                    </a>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,6 +110,26 @@ export const TransactionPage = Vue.component('view-transactions', {
     `,
     data: function() {
         return {
+            columns: [
+                {
+                    label:'Name',
+                    name:'borrower_name'
+                },
+                {
+                    label: 'Type',
+                    name: 'type'
+                },
+                {
+                    label: 'Payment type',
+                    name: 'payment_type'
+                },
+                {
+                    label: 'Transaction date',
+                    name: 'transaction_date'
+                }
+            ],
+            reverse: false,
+            sortKey: 'borrower_name',
             transactions: [],
             contacts: [],
             selectedContact: {},
@@ -132,6 +152,14 @@ export const TransactionPage = Vue.component('view-transactions', {
     methods: {
         getEpoch: function(date) {
             this.form.transaction_date = ((new Date(date)).getTime())/1000;
+        },
+        sortBy: function(sortKey) {
+
+            this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false;
+
+            this.sortKey = sortKey;
+
+
         },
         selectTransaction: function(transaction) {
             for (const [key,value] of Object.entries(transaction)) {
