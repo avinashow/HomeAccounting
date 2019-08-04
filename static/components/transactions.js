@@ -1,4 +1,5 @@
 import {contactService} from '../_services/contact.service.js';
+import {transactionService} from '../_services/transaction.service.js';
 
 export const TransactionPage = Vue.component('view-transactions', {
     template: `
@@ -71,6 +72,20 @@ export const TransactionPage = Vue.component('view-transactions', {
                                 <input v-model="form.amount" id="amount" class="form-control">
                             </div>
                             <div class="form-group">
+                                <label for="type">Type:</label>
+                                <select id="type" v-model="form.type" class="form-control">
+                                    <option>Choose</option>
+                                    <option value="lend">lend</option>
+                                    <option value="payback">payback</option>
+                                 </select>
+                            </div>
+                            <div class="form-group" v-if="form.type === 'payback'">
+                                <label for="paymenttype">Payment type:</label>
+                                <select id="paymenttype" v-model="form.paymenttype" class="form-control">
+                                    <option>Choose</option>
+                                    <option value="principal">Principal</option>
+                                    <option value="interest">Interest</option>
+                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <button class="btn btn-light" v-on:click="resetForm">Reset</button>
@@ -92,7 +107,9 @@ export const TransactionPage = Vue.component('view-transactions', {
                     name: '',
                     phone_num: ''
                 },
-                amount:''
+                amount:'',
+                type:'',
+                payment_type:'principal',
             }
         }
     },
@@ -129,7 +146,7 @@ export const TransactionPage = Vue.component('view-transactions', {
     created: function() {
         let vm = this;
 
-        transactionService.getTransactions()
+        transactionService.listTransactions()
             .then(response => response.json())
             .then(response => {
                 vm.transactions = response.items;
