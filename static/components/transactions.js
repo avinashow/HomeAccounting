@@ -168,9 +168,15 @@ export const TransactionPage = Vue.component('view-transactions', {
         selectTransaction: function(transaction) {
             for (const [key,value] of Object.entries(transaction)) {
                 if (this.form.hasOwnProperty(key)) {
-                    this.form[key] = value;
+                    if (key === 'transaction_date') {
+                        this.form[key] = new Date(parseInt(value) * 1000).toDateInputValue();
+                        this.form["transaction_date_copy"] = new Date(parseInt(value) * 1000).toDateInputValue();
+                    } else {
+                        this.form[key] = value;
+                    }
                 }
             }
+            console.log(this.form);
         },
         checkContactExist: function(name) {
             this.selectedContact = this.contacts.filter((contact) => {
