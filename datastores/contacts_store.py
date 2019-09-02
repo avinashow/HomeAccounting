@@ -13,7 +13,7 @@ class ContactsStore:
 
     @staticmethod
     def delete_contact(contact):
-        ndb.multi_delete([contact])
+        ndb.delete_multi([contact.key])
 
     @staticmethod
     def update_contact(contact):

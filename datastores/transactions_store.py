@@ -13,7 +13,7 @@ class TransactionsStore:
 
     @staticmethod
     def delete_transaction(transaction):
-        ndb.multi_delete([transaction])
+        ndb.delete_multi([transaction.key])
 
     @staticmethod
     def update_transaction(transaction):

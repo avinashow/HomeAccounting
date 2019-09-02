@@ -78,6 +78,7 @@ class TransactionResource(BaseResource):
     def delete(self, request):
         user_id = self.get_current_user_id()
         self.transaction_service.delete_transaction(user_id=user_id, transaction_id=request.transaction_id)
+        return message_types.VoidMessage()
 
     TRANSACTION_LIST_REQUEST = endpoints.ResourceContainer(
         message_types.VoidMessage,
