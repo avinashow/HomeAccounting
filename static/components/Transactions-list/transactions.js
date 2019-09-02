@@ -1,6 +1,5 @@
 import { transactionsTemplate } from './transactions.template.js';
 import { transactionOperations } from './transactions.functions.js';
-
 import { transactionService } from '../../_services/transaction.service.js';
 
 export const TransactionPage = Vue.component('view-transactions', {

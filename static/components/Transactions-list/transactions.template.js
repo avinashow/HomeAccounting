@@ -39,4 +39,9 @@ export const transactionsTemplate = `
                 </div>
             </div>
         </div>
+        <transaction-modal
+            mode="mode"
+            form="form"
+            toggleTransaction="toggleTransaction(form)">
+        </transaction-modal>
     </div>`;

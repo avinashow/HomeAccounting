@@ -1,10 +1,11 @@
-export const transactionModal = Vue.component('transaction-modal', {
+Vue.component('transaction-modal', {
     props: {
         mode: {
             type: String,
             required: true,
             default: 'NEW'
         },
+        form: Object,
         toggleTransaction: {
             type: Function
         },

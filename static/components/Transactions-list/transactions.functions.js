@@ -10,8 +10,6 @@ export const transactionOperations = {
         this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false;
 
         this.sortKey = sortKey;
-
-
     },
     selectTransaction: function(transaction) {
         for (const [key,value] of Object.entries(transaction)) {
