@@ -1,6 +1,6 @@
 import { LoginPage } from './components/Login.js';
 import { SummaryPage } from './components/overview.js';
-import { TransactionPage } from './components/Transactions-list/transactions.js';
+import { TransactionPage } from './components/Transactions-list/transactions.component.js';
 
 export const router = new VueRouter({
     mode: 'history',
