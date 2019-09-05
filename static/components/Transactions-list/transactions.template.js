@@ -55,18 +55,18 @@ export const transactionsTemplate = `
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form v-on:submit.prevent="addContact()">
+                        <form v-on:submit.prevent="addContact(form.contact)">
                             <div class="form-group">
-                                <label for="fullname">Name</label>
-                                <input v-model="form.borrower_name" id="fullname" class="form-control">
+                                <label for="fullname">Name:</label>
+                                <input v-model="form.contact.borrower_name" id="fullname" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone:</label>
-                                <input v-model="form.phone_num" id="phone" class="form-control">
+                                <input v-model="form.contact.phone_num" id="phone" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="address">Address:</label>
-                                <textarea v-model="form.address" class="form-control"></textarea>
+                                <textarea v-model="form.contact.address" class="form-control"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

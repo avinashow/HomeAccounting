@@ -31,21 +31,22 @@ export const TransactionPage = Vue.component('view-transactions', {
                 }
             ],
             reverse: false,
-            sortKey: 'borrower_name',
             transactions: [],
             contacts: [],
             selectedContact: {},
             contactExists: false,
             mode: 'EDIT',
             form: {
-                phone_num: '',
-                address:'',
+                contact: {
+                    phone_num: '',
+                    address:'',
+                    borrower_name: '',
+                },
                 amount: '',
                 type: '',
                 payment_type:'principal',
                 interest_rate: 0,
-                borrower_id:'0',
-                borrower_name: '',
+                borrower_id: 0,
                 transaction_date: '',
                 transaction_date_copy: '',
             }

@@ -5,12 +5,6 @@ export const transactionOperations = {
     getEpoch: function(date) {
         this.form.transaction_date = ((new Date(date)).getTime())/1000;
     },
-    sortBy: function(sortKey) {
-
-        this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false;
-
-        this.sortKey = sortKey;
-    },
     selectTransaction: function(transaction) {
         for (const [key,value] of Object.entries(transaction)) {
             if (this.form.hasOwnProperty(key)) {
@@ -23,16 +17,8 @@ export const transactionOperations = {
             }
         }
     },
-    checkContactExist: function(name) {
-        this.selectedContact = this.contacts.filter((contact) => {
-            return contact.name === name;
-        })[0];
-
-        if (this.selectedContact) {
-            this.contactExists = true;
-        } else {
-            this.contactExists = false;
-        }
+    selectContact: function(contact) {
+        this.selectedContact = contact;
     },
     toggleTransaction: function(requestObj) {
         if (this.mode === 'EDIT') {
@@ -41,16 +27,18 @@ export const transactionOperations = {
             this.addTransaction(requestObj);
         }
     },
-    addContact: function() {
+    addContact: function(requestObj) {
         let vm = this;
         contactService.addContact({
-            name:this.form.borrower_name,
-            phone_num: this.form.phone_num,
-            address: this.form.address
+            name: requestObj.borrower_name,
+            phone_num: requestObj.phone_num,
+            address: requestObj.address
         })
         .then(response => response.json())
         .then(response => {
             vm.selectedContact = response;
+            vm.borrower_id = response.borrower_id;
+            $('#contactModal').modal('hide');
         })
         .catch(error => {
         });
@@ -59,11 +47,10 @@ export const transactionOperations = {
         let vm = this;
         let newRequestObj = {};
         for (const [key, value] of Object.entries(requestObj)) {
-            if (key !== 'address' && key !== 'borrower_name' && key !== 'transaction_date_copy') {
+            if (key !== 'contact') {
                 newRequestObj[key] = value;
             }
         }
-        newRequestObj['borrower_id'] = vm.selectedContact.contact_id;
         transactionService.addTransaction(newRequestObj)
             .then(response => response.json())
             .then(response => {
@@ -98,16 +85,18 @@ export const transactionOperations = {
     },
     resetForm: function() {
         this.form =  {
-            phone_num: '',
-            address:'',
+            contact: {
+                phone_num: '',
+                address:'',
+                borrower_name: '',
+            },
             amount: '',
             type: '',
             payment_type:'principal',
             interest_rate: 0,
-            borrower_id:'0',
-            borrower_name:'',
+            borrower_id: 0,
             transaction_date: '',
             transaction_date_copy: '',
-        };
+        }
     },
 };
