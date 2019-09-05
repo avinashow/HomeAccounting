@@ -3,9 +3,15 @@ export const transactionsTemplate = `
         <div class="col grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <button type="button" @click="mode='NEW';resetForm();" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
-                        Add transaction
-                    </button>
+                    <div class="dropdown float-right">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Add
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" @click="mode='NEW';resetForm();" data-toggle="modal" data-target="#contactModal">Contact</a>
+                            <a class="dropdown-item" href="#" @click="mode='NEW';resetForm();" data-toggle="modal" data-target="#myModal">Transaction</a>
+                        </div>
+                    </div>
                     <table class="table">
                         <thead>
                             <tr>
@@ -39,6 +45,35 @@ export const transactionsTemplate = `
                 </div>
             </div>
         </div>
+        <div class="modal modal-full fade" id="contactModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Add contact
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form v-on:submit.prevent="addContact()">
+                            <div class="form-group">
+                                <label for="fullname">Name</label>
+                                <input v-model="form.borrower_name" id="fullname" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone:</label>
+                                <input v-model="form.phone_num" id="phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address:</label>
+                                <textarea v-model="form.address" class="form-control"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal modal-full fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -56,17 +91,13 @@ export const transactionsTemplate = `
                     <div class="modal-body">
                         <form v-on:submit.prevent="toggleTransaction(form)">
                             <div class="form-group">
-                                <label for="fullname">Name</label>
-                                <input v-model="form.borrower_name"
-                                    list="contacts-list" v-on:change="checkContactExist(form.borrower_name)" 
-                                    id="fullname" class="form-control">
-                                <datalist id="contacts-list">
-                                    <option v-for="contact in contacts" v-bind:value="contact.name">{{contact.name}}</option>
-                                </datalist>
-                            </div>
-                            <div class="form-group" v-if="!contactExists">
-                                <label for="phone">Phone:</label>
-                                <input v-model="form.phone_num" id="phone" class="form-control" v-on:blur="addContact()">
+                                <label for="fullname">Contact:</label>
+                                <select v-model="form.borrower_id" class="form-control">
+                                    <option>Choose</option>
+                                    <option v-for="contact in contacts" v-bind:value="contact.id">
+                                        {{contact.name}}
+                                    </option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="transaction-date">Date:</label>
