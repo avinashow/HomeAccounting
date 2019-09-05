@@ -59,10 +59,12 @@ class TransactionResource(BaseResource):
 
         # TODO - verify that all required fields have valid values
 
-        self.transaction_service.update_transaction(user_id=user_id, transaction_id=request.transaction_id,
-                                                    transaction_type=transaction_type, payment_type=payment_type,
-                                                    amount=amount, transaction_date=transaction_date,
-                                                    borrower_id=borrower, interest_rate=interest_rate)
+        transaction = self.transaction_service.update_transaction(user_id=user_id, transaction_id=request.transaction_id,
+                                                                  transaction_type=transaction_type, payment_type=payment_type,
+                                                                  amount=amount, transaction_date=transaction_date,
+                                                                  borrower_id=borrower, interest_rate=interest_rate)
+
+        return self.adapt_transaction_to_response(transaction)
 
     TRANSACTION_DELETE_REQUEST = endpoints.ResourceContainer(
         message_types.VoidMessage,

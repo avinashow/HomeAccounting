@@ -44,7 +44,7 @@ class TransactionsService:
             transaction.interest_rate = interest_rate
 
         self.store.update_transaction(transaction)
-        return True
+        return transaction
 
     def delete_transaction(self, user_id, transaction_id):
         transaction = self.store.get_transaction(transaction_id)
