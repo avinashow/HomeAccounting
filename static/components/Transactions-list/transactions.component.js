@@ -1,6 +1,8 @@
 import { transactionsTemplate } from './transactions.template.js';
 import { transactionOperations } from './transactions.functions.js';
 import { transactionService } from '../../_services/transaction.service.js';
+import { contactService } from '../../_services/contact.service.js';
+import '../../responses.js';
 
 export const TransactionPage = Vue.component('view-transactions', {
     template: transactionsTemplate,
@@ -52,6 +54,16 @@ export const TransactionPage = Vue.component('view-transactions', {
     methods: transactionOperations,
     created: function() {
         let vm = this;
+
+        contactService.getContacts()
+            .then(response => response.json())
+            .then(response => {
+                vm.contacts = response.items;
+            })
+            .catch(error => {
+                // TODO alerts
+            });
+
 
         transactionService.listTransactions()
             .then(response => response.json())

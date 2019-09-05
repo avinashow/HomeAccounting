@@ -22,12 +22,12 @@ export const transactionOperations = {
                 }
             }
         }
-        console.log(this.form);
     },
     checkContactExist: function(name) {
         this.selectedContact = this.contacts.filter((contact) => {
             return contact.name === name;
-        });
+        })[0];
+
         if (this.selectedContact) {
             this.contactExists = true;
         } else {
@@ -41,34 +41,36 @@ export const transactionOperations = {
             this.addTransaction(requestObj);
         }
     },
-    addTransaction: function(requestObj) {
+    addContact: function() {
         let vm = this;
         contactService.addContact({
-                name:this.form.borrower_name,
-                phone_num: this.form.phone_num,
-                address: this.form.address
-            })
+            name:this.form.borrower_name,
+            phone_num: this.form.phone_num,
+            address: this.form.address
+        })
+        .then(response => response.json())
+        .then(response => {
+            vm.selectedContact = response;
+        })
+        .catch(error => {
+        });
+    },
+    addTransaction: function(requestObj) {
+        let vm = this;
+        let newRequestObj = {};
+        for (const [key, value] of Object.entries(requestObj)) {
+            if (key !== 'address' && key !== 'borrower_name' && key !== 'transaction_date_copy') {
+                newRequestObj[key] = value;
+            }
+        }
+        newRequestObj['borrower_id'] = vm.selectedContact.contact_id;
+        transactionService.addTransaction(newRequestObj)
             .then(response => response.json())
             .then(response => {
-                let newRequestObj = {};
-                for (const [key, value] of Object.entries(requestObj)) {
-                    if (key !== 'contact') {
-                        newRequestObj[key] = value;
-                    }
-                }
-                newRequestObj['borrower_id'] = response.contact_id;
-                transactionService.addTransaction(newRequestObj)
-                    .then(response => response.json())
-                    .then(response => {
-                        document.getElementById('myModal').modal('hide');
-                        vm.$router.push('/transactions');
-                    })
-                    .catch(error => {
-
-                    });
+                this.transactions.push(response);
+                $('#myModal').modal('hide');
             })
             .catch(error => {
-
             });
     },
     updateTransaction: function(transactionObj) {

@@ -4,7 +4,7 @@ export const contactService = {
 }
 
 function getContacts() {
-
+    return fetch(`/_ah/api/homac/v1/contacts?access_token=${localStorage.getItem('accessToken')}`, {});
 }
 
 function addContact(contactData) {

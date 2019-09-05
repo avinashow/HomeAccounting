@@ -57,14 +57,16 @@ export const transactionsTemplate = `
                         <form v-on:submit.prevent="toggleTransaction(form)">
                             <div class="form-group">
                                 <label for="fullname">Name</label>
-                                <input v-model="form.borrower_name" list="contacts-list" v-on:change="checkContactExist(form.borrower_name)" id="fullname" class="form-control">
+                                <input v-model="form.borrower_name"
+                                    list="contacts-list" v-on:change="checkContactExist(form.borrower_name)" 
+                                    id="fullname" class="form-control">
                                 <datalist id="contacts-list">
-                                    <option v-for="contact in contacts" value="contact.name">{{contact.name}}</option>
+                                    <option v-for="contact in contacts" v-bind:value="contact.name">{{contact.name}}</option>
                                 </datalist>
                             </div>
-                            <div class="form-group" v-if="contactExists">
+                            <div class="form-group" v-if="!contactExists">
                                 <label for="phone">Phone:</label>
-                                <input v-model="form.phone_num" id="phone" class="form-control">
+                                <input v-model="form.phone_num" id="phone" class="form-control" v-on:blur="addContact()">
                             </div>
                             <div class="form-group">
                                 <label for="transaction-date">Date:</label>

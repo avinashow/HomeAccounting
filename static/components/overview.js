@@ -1,4 +1,5 @@
 import {overviewService} from '../_services/overview.service.js';
+import '../responses.js';
 
 export const SummaryPage = Vue.component('Summary', {
     template:`
@@ -152,7 +153,7 @@ export const SummaryPage = Vue.component('Summary', {
             this.summaryItems = response.items;
           })
           .catch(error => {
-
+            this.summaryItems = overviewOffResponse.items;
           });
     },
   });
