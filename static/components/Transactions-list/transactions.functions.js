@@ -6,6 +6,7 @@ export const transactionOperations = {
         this.form.transaction_date = ((new Date(date)).getTime())/1000;
     },
     selectTransaction: function(transaction) {
+        console.log(transaction);
         for (const [key,value] of Object.entries(transaction)) {
             if (this.form.hasOwnProperty(key)) {
                 if (key === 'transaction_date') {
@@ -47,7 +48,7 @@ export const transactionOperations = {
         let vm = this;
         let newRequestObj = {};
         for (const [key, value] of Object.entries(requestObj)) {
-            if (key !== 'contact') {
+            if (key !== 'contact' && key !== 'transaction_date_copy' && key !== 'transaction_id') {
                 newRequestObj[key] = value;
             }
         }
@@ -61,10 +62,16 @@ export const transactionOperations = {
             });
     },
     updateTransaction: function(transactionObj) {
-        transactionService.updateTransaction(transactionObj)
+        let newRequestObj = {};
+        for (const [key, value] of Object.entries(transactionObj)) {
+            if (key !== 'contact' && key !== 'transaction_date_copy') {
+                newRequestObj[key] = value;
+            }
+        }
+        transactionService.updateTransaction(newRequestObj)
             .then(response => response.json())
             .then(response => {
-                this.resetForm();
+                $('#myModal').modal('hide');
             })
             .catch(error => {
 

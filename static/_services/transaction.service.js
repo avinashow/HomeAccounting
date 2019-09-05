@@ -21,7 +21,7 @@ function addTransaction(transactionData) {
 
 function updateTransaction(transactionData) {
     const requestOptions = {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body:JSON.stringify(transactionData),
     };

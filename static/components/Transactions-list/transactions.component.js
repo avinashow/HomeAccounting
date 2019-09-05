@@ -47,6 +47,7 @@ export const TransactionPage = Vue.component('view-transactions', {
                 payment_type:'principal',
                 interest_rate: 0,
                 borrower_id: 0,
+                transaction_id: 0,
                 transaction_date: '',
                 transaction_date_copy: '',
             }
