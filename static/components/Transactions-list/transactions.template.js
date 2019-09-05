@@ -94,7 +94,7 @@ export const transactionsTemplate = `
                                 <label for="fullname">Contact:</label>
                                 <select v-model="form.borrower_id" class="form-control">
                                     <option>Choose</option>
-                                    <option v-for="contact in contacts" v-bind:value="contact.id">
+                                    <option v-for="contact in contacts" v-bind:value="contact.contact_id">
                                         {{contact.name}}
                                     </option>
                                 </select>

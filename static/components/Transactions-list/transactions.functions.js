@@ -37,7 +37,7 @@ export const transactionOperations = {
         .then(response => response.json())
         .then(response => {
             vm.selectedContact = response;
-            vm.borrower_id = response.borrower_id;
+            vm.form.borrower_id = response.contact_id;
             $('#contactModal').modal('hide');
         })
         .catch(error => {
