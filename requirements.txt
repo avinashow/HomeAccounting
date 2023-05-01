@@ -1,4 +1,4 @@
-Flask==0.12.4
+Flask==2.3.2
 Werkzeug<0.13.0,>=0.12.0
 google-endpoints==4.8.0
 google-endpoints-api-management==1.11.0
